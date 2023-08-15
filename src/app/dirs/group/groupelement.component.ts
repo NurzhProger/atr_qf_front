@@ -72,6 +72,9 @@ export class groupelementComponent {
             this.saved = true;
             this.getchildlist()
         }
+        else {
+            this.loading = true
+        }
         this.tableData = [
             {
                 id: ''

@@ -14,8 +14,8 @@ declare var sessionStorage: any;
 export class HttpService {
   constructor(private http: HttpClient) { }
   // host = "http://192.168.5.26:9999/srv/";
-  host = "http://192.168.5.31:9999/srv/";
-  // host = "https://face06.qazna24.kz/srv/";
+  // host = "http://192.168.5.31:9999/srv/";
+  host = "https://face06.qazna24.kz/srv/";
 
   authuser(login: string, pass: string) {
     let myHeaders = new HttpHeaders()

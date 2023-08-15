@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpService } from '../../http.service';
 import { groupelementComponent } from 'src/app/dirs/group/groupelement.component';
@@ -19,8 +19,12 @@ export class grouplistComponent {
         public dialogServiceGroupList: DialogService,
         private messageServicedel: MessageService,
         public groupListref: DynamicDialogRef) { }
+
     @Output() closeEvent = new EventEmitter<any>();
     @Output() newItemEvent = new EventEmitter<any>();
+    @Input() user_org_id = ''
+    @Input() user_org_name = ''
+    @Input() is_staff = ''
 
     pages: number[] = [];
     groupViewList: groupView;
@@ -84,8 +88,8 @@ export class grouplistComponent {
 
     openNew() {
         this.groupViewList = {
-            id_org: '',
-            org_name: '',
+            id_org: this.user_org_id,
+            org_name: this.user_org_name,
             id_group: '*',
             group_name: '',
             group_age: '',
