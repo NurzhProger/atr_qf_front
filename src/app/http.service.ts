@@ -193,6 +193,13 @@ export class HttpService {
     return this.http.post(this.host + "importfile", JSON.stringify(body), { headers: myHeaders })
   }
 
+  send_file_metodist(body: any) {
+    let myHeaders = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', sessionStorage.getItem('token'));
+    return this.http.post(this.host + "importmetodist", JSON.stringify(body), { headers: myHeaders })
+  }
+
   startpage() {
     let myHeaders = new HttpHeaders()
       .set('Content-Type', 'application/json')

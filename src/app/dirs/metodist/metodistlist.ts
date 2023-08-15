@@ -4,6 +4,7 @@ import { HttpService } from '../../http.service';
 import { metodistelementComponent } from 'src/app/dirs/metodist/metodistelement';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { metodistView } from '..//../interfaces';
+import { uploadComponent } from '../upload/upload.component';
 declare var myLocalStorage: any; //Локальное хранилище
 
 @Component({
@@ -16,8 +17,8 @@ declare var myLocalStorage: any; //Локальное хранилище
 export class metodistlistComponent {
     constructor(private httpservice: HttpService,
         private confirmationServiceMetodist: ConfirmationService,
-        public dialogServiceMetodistList: DialogService,
-        public MetodistListref: DynamicDialogRef,
+        private dialogServiceMetodistList: DialogService,
+        private MetodistListref: DynamicDialogRef,
         private messageServicedelMetodList: MessageService) { }
     @Output() closeEvent = new EventEmitter<any>();
     @Output() newItemEvent = new EventEmitter<any>();
@@ -62,6 +63,23 @@ export class metodistlistComponent {
 
     reset() {
         this.getmetodistlist()
+    }
+
+    openUpload() {
+        this.MetodistListref = this.dialogServiceMetodistList.open(uploadComponent,
+            {
+                header: 'Импорт воспитателей',
+                width: '40%',
+                height: '30%',
+                data: { type: 'metodist' }
+            });
+
+        this.MetodistListref.onClose.subscribe((save: boolean) => {
+            if (save) {
+                this.reset(),
+                    this.messageServicedelMetodList.add({ severity: 'success', summary: 'Успешно', detail: 'Данные загружены!' })
+            }
+        });
     }
 
     onRowEdit(metodist: metodistView) {

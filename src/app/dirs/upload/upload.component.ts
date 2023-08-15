@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpService } from '../../http.service';
 declare var myLocalStorage: any; //Локальное хранилище
 
@@ -12,7 +12,13 @@ declare var myLocalStorage: any; //Локальное хранилище
 export class uploadComponent {
     constructor(private httpservice: HttpService,
         private uploadref: DynamicDialogRef,
-        private messageServiceUpload: MessageService) { }
+        private messageServiceUpload: MessageService,
+        private uploadconfig: DynamicDialogConfig) { }
+    type: string = '';
+
+    ngOnInit() {
+        this.type = this.uploadconfig.data.type;
+    }
 
     onUpload(event: any) {
 
@@ -30,10 +36,19 @@ export class uploadComponent {
     }
 
     send_file(reader: any) {
-        this.httpservice
-            .send_file({ "file": reader })
-            .subscribe(
-                (data) => (this.uploadref.close(true)),
-                (error) => (this.messageServiceUpload.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })));
+        if (this.type == 'child') {
+            this.httpservice
+                .send_file({ "file": reader })
+                .subscribe(
+                    (data) => (this.uploadref.close(true)),
+                    (error) => (this.messageServiceUpload.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })))
+        }
+        else if (this.type == 'metodist') {
+            this.httpservice
+                .send_file_metodist({ "file": reader })
+                .subscribe(
+                    (data) => (this.uploadref.close(true)),
+                    (error) => (this.messageServiceUpload.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })))
+        }
     }
 }
