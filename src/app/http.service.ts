@@ -14,8 +14,8 @@ declare var sessionStorage: any;
 export class HttpService {
   constructor(private http: HttpClient) { }
   // host = "http://192.168.5.26:9999/srv/";
-  // host = "http://192.168.5.23:9999/srv/";
-  host = "https://face11.qazna24.kz/srv/";
+  host = "http://192.168.5.31:9999/srv/";
+  // host = "https://face12.qazna24.kz/srv/";
 
   authuser(login: string, pass: string) {
     let myHeaders = new HttpHeaders()
@@ -387,7 +387,7 @@ export class HttpService {
       .set('Content-Type', 'application/json')
       .set('Authorization', sessionStorage.getItem('token'));
     // return this.http.get("http://192.168.5.23:9999/api/changestatusbyadm?case=" + real + "&id=" + id, { headers: myHeaders })
-    return this.http.get("https://face11.qazna24.kz/api/changestatusbyadm?case=" + real + "&id=" + id, { headers: myHeaders })
+    return this.http.get("https://face12.qazna24.kz/api/changestatusbyadm?case=" + real + "&id=" + id, { headers: myHeaders })
   }
 
   getOtherFoto(iin: string, id?: number) {
