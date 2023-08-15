@@ -1,11 +1,10 @@
 <div class="p-fluid">
-    <div style="display: flex;">
-        <div style="padding: 0 10px 10px 0; width: 60%;">
+    <div style="display: flex; padding-bottom: 10px;">
+        <div style="padding-right: 10px; width: 60%;">
             <label>Наименование <span style="color: red;">*</span></label>
             <div class="p-inputgroup" [formGroup]="groupForm">
                 <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
-                <input [readOnly]=true type="text" pInputText formControlName="nameGrFormControl"
-                    [(ngModel)]="groupView.group_name" />
+                <input type="text" pInputText formControlName="nameGrFormControl" [(ngModel)]="groupView.group_name" />
             </div>
             <small class="p-invalid"
                 *ngIf="!groupForm.controls['nameGrFormControl'].valid&&groupForm.controls['nameGrFormControl'].dirty">
@@ -22,14 +21,40 @@
                 Выберите категорию</small>
         </div> -->
 
-        <div style="padding-bottom: 10px; width: 40%;">
+        <div style="padding-right: 10px; width: 20%;">
             <label>Возрастная группа</label>
             <p-dropdown [options]="groupAgeOptions" placeholder="Выберите возр. группу"
                 [(ngModel)]="groupView.group_age"></p-dropdown>
         </div>
+
+        <div style="padding-right: 10px; width: 20%;" [formGroup]="groupForm">
+            <label>Количество мест <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <input type="number" [min]="1" pInputText [(ngModel)]="groupView.group_count"
+                    formControlName="CountFormControl" />
+            </div>
+            <small class="p-invalid"
+                *ngIf="!groupForm.controls['CountFormControl'].valid&&groupForm.controls['CountFormControl'].dirty">
+                Введите количество мест</small>
+        </div>
+
     </div>
+
+    <div style="padding-bottom: 10px; width: 100%;">
+        <label>Организация <span style="color: red;">*</span></label>
+        <div class="p-inputgroup" [formGroup]="groupForm">
+            <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="groupView.org_name"
+                placeholder="Выберите организацию" (click)="openOrg()" formControlName="orgFormControl">
+            <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+        </div>
+        <small class="p-invalid"
+            *ngIf="!groupForm.controls['orgFormControl'].valid&&groupForm.controls['orgFormControl'].dirty">
+            Выберите организацию</small>
+    </div>
+
     <div style="display: flex;  width: 100%;">
-        <div style="padding-right: 10px;  width: 40%;">
+        <div style="padding-right: 10px;  width: 60%;">
             <label>Воспитатель <span style="color: red;">*</span></label>
             <div class="p-inputgroup" [formGroup]="groupForm">
                 <input [readOnly]="true" type="text" pInputText formControlName="MetodistFormControl"
@@ -50,16 +75,7 @@
             </div>
         </div>
 
-        <div style="width: 20%;" [formGroup]="groupForm">
-            <label>Количество мест <span style="color: red;">*</span></label>
-            <div class="p-inputgroup">
-                <input type="number" [min]="1" pInputText [(ngModel)]="groupView.group_count"
-                    formControlName="CountFormControl" />
-            </div>
-            <small class="p-invalid"
-                *ngIf="!groupForm.controls['CountFormControl'].valid&&groupForm.controls['CountFormControl'].dirty">
-                Выберите воспитателя</small>
-        </div>
+
     </div>
     <div style="width:100%; padding-top: 10px;">
         <label style="color: red;">* - обязательные поля</label>
@@ -67,9 +83,9 @@
 </div>
 <p-toolbar>
     <div class="p-toolbar-group-left">
-        <!-- <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"
+        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"
             [disabled]="!saved">
-        </button> -->
+        </button>
     </div>
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">

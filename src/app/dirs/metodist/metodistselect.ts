@@ -99,6 +99,7 @@ export class metodistselectComponent {
     openNew() {
         this.metodistViewList = {
             id_org: '',
+            org_name: '',
             username: '',
             password: '',
             first_name: '',

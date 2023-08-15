@@ -113,6 +113,7 @@ export class metodistlistadminComponent {
 
         this.metodistViewList = {
             id_org: '',
+            org_name: '',
             username: '',
             password: '',
             first_name: '',

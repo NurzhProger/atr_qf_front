@@ -52,6 +52,7 @@ export class tablechildComponent {
 
     groupView: groupView = {
         id_org: '',
+        org_name: '',
         id_group: '',
         group_name: '',
         group_age: '',

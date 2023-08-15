@@ -110,6 +110,7 @@ export class grouplistadmComponent {
     openNew() {
         this.groupViewList = {
             id_org: '',
+            org_name: '',
             id_group: '*',
             group_name: '',
             group_age: '',

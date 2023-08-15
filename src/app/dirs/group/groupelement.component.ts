@@ -9,6 +9,7 @@ import { childselectComponent } from 'src/app/dirs/child/childselect';
 import { childListView } from '..//../interfaces';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { metodistelementComponent } from '../metodist/metodistelement';
+import { orgselectComponent } from 'src/app/adminpanel/organization/organization-select';
 declare var myLocalStorage: any; //Локальное хранилище
 
 
@@ -22,13 +23,13 @@ declare var myLocalStorage: any; //Локальное хранилище
 export class groupelementComponent {
     constructor(private httpservice: HttpService,
         private confirmationServiceChildGroupEl: ConfirmationService,
-        public groupelementref: DynamicDialogRef,
-        public metodSelectref: DynamicDialogRef,
-        public childListGroupref: DynamicDialogRef,
+        private groupelementref: DynamicDialogRef,
+        private metodSelectref: DynamicDialogRef,
+        private childListGroupref: DynamicDialogRef,
         private messageServiceSaveEl: MessageService,
-        public dialogServiceChildListGroup: DialogService,
-        public metodSelectdialogService: DialogService,
-        public groupelementconfig: DynamicDialogConfig) { }
+        private dialogServiceChildListGroup: DialogService,
+        private metodSelectdialogService: DialogService,
+        private groupelementconfig: DynamicDialogConfig) { }
 
     groupForm!: FormGroup;
     groupView: groupView;
@@ -58,6 +59,7 @@ export class groupelementComponent {
 
     ngOnInit() {
         this.groupForm = new FormGroup({
+            orgFormControl: new FormControl('', Validators.required),
             nameGrFormControl: new FormControl('', Validators.required),
             MetodistFormControl: new FormControl('', Validators.required),
             CountFormControl: new FormControl('', Validators.required),
@@ -87,6 +89,23 @@ export class groupelementComponent {
                 id: ''
             },
         ];
+    }
+
+    openOrg() {
+        this.groupelementref = this.dialogServiceChildListGroup.open(orgselectComponent,
+            {
+                header: 'Выбор организации',
+                width: 'calc(60%)',
+                height: 'calc(80%)',
+                data: { suborg: true }
+            })
+
+        this.groupelementref.onClose.subscribe((org: any) => {
+            if (org) {
+                this.groupView.id_org = org.id_org,
+                    this.groupView.org_name = org.org_name
+            }
+        })
     }
 
     getchildlist() {

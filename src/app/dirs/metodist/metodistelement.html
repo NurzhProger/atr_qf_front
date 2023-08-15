@@ -23,6 +23,19 @@
             Введите ИИН воспитателя</small>
     </div>
 
+    <div style="padding-bottom: 10px; width: 100%;">
+        <h5>Организация *</h5>
+        <div class="p-inputgroup" [formGroup]="metodistForm">
+            <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="metodistView.org_name"
+                placeholder="Выберите организацию" (click)="openOrg()" formControlName="orgFormControl">
+            <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['orgFormControl'].valid&&metodistForm.controls['orgFormControl'].dirty">
+            Выберите организацию</small>
+    </div>
+
     <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
         <label for="email">Почта <span style="color: red;">*</span></label>
         <input [readOnly]="readonly" type="text" pInputText id="email" placeholder="email@example.com"

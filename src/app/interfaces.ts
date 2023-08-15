@@ -1,6 +1,7 @@
 export interface groupView {
     id_org: string,
     id_group: string,
+    org_name: string,
     group_name: string,
     group_age: string,
     group_count: string,
@@ -93,6 +94,7 @@ export interface childView {
 
 export interface metodistView {
     id_org: string,
+    org_name: string,
     username: string,
     password: string,
     first_name: string,

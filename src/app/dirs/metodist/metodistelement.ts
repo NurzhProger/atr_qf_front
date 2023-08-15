@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { orgselectComponent } from 'src/app/adminpanel/organization/organization-select';
 import { HttpService } from '../../http.service';
 import { metodistView } from '..//../interfaces';
 declare var myLocalStorage: any; //Локальное хранилище
@@ -15,11 +16,11 @@ declare var myLocalStorage: any; //Локальное хранилище
 
 export class metodistelementComponent {
     constructor(private httpservice: HttpService,
-        public metodistSelectref: DynamicDialogRef,
-        public childelementref: DynamicDialogRef,
+        private metodistSelectref: DynamicDialogRef,
+        private childelementref: DynamicDialogRef,
         private messageServiceadd: MessageService,
-        public metodistSelectdialogService: DialogService,
-        public metodistelementconfig: DynamicDialogConfig) { }
+        private metodistSelectdialogService: DialogService,
+        private metodistelementconfig: DynamicDialogConfig) { }
 
     metodistForm: FormGroup;
     metodistView: metodistView;
@@ -34,6 +35,7 @@ export class metodistelementComponent {
     ngOnInit() {
         this.metodistForm = new FormGroup({
             nameFormControl: new FormControl('', Validators.required),
+            orgFormControl: new FormControl('', Validators.required),
             emailFormControl: new FormControl('', [Validators.required, Validators.email]),
             IINFormControl: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12), Validators.pattern(/^-?(0|[0-9]\d*)?$/)]),
             PasswordFormControl: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -46,6 +48,23 @@ export class metodistelementComponent {
             this.readonly = true;
         }
 
+    }
+
+    openOrg() {
+        this.metodistSelectref = this.metodistSelectdialogService.open(orgselectComponent,
+            {
+                header: 'Выбор организации',
+                width: 'calc(60%)',
+                height: 'calc(80%)',
+                data: { suborg: true }
+            })
+
+        this.metodistSelectref.onClose.subscribe((org: any) => {
+            if (org) {
+                this.metodistView.id_org = org.id_org,
+                    this.metodistView.org_name = org.org_name
+            }
+        })
     }
 
     change(mainpassword: String) {

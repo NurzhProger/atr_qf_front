@@ -36,6 +36,7 @@ export class visitchildComponent {
     groupView: groupView = {
         id_org: '',
         id_group: '',
+        org_name: '',
         group_name: '',
         group_age: '',
         group_count: '',
