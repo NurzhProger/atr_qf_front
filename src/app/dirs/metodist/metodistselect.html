@@ -1,0 +1,92 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="openNew()"></button>
+    </div>
+    <div class="p-toolbar-group-right">
+        <span class="p-input-icon-left" style="margin-right: 10px;">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="searchmetodist" (change)="search()" placeholder="поиск..." />
+        </span>
+    </div>
+</p-toolbar>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="metodist.list" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [(selection)]="selectedMetodist">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:20%; text-align:center">ИИН воспитателя</th>
+                <th style="width:35%; text-align:center">ФИО воспитателя</th>
+                <th style="width:20%; text-align:center">Почта</th>
+                <th style="width:20%; text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-metodistlet let-ri="rowIndex">
+            <tr class="cursor-pointer" (dblclick)="onRowSelect(metodistlet)" [pSelectableRow]="metodistlet">
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td style="text-align:center">
+                    {{metodistlet.username}}
+                </td>
+                <td>
+                    {{metodistlet.first_name}}
+                </td>
+                <td>
+                    {{metodistlet.email}}
+                </td>
+                <td style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-key" class="p-button-rounded p-button-text" matTooltip="Изменить"
+                            (click)="onRowEdit(metodistlet)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" matTooltip="Удалить" (click)="deleteMetodist(metodistlet)"
+                            class="p-button-rounded p-button-text"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:20%; text-align:center">ИИН воспитателя</th>
+                <th style="width:35%; text-align:center">ФИО воспитателя</th>
+                <th style="width:20%; text-align:center">Почта</th>
+                <th style="width:20%; text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body">
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
+
+<div style="padding-top: 10px;" class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Выбрать" icon="pi pi-check" class="p-button-outlined p-button-success"
+        (click)="selectMetodist()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div>

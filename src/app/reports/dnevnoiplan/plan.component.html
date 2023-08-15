@@ -1,0 +1,222 @@
+<p-toolbar styleClass="p-toolbar-sm">
+    <div class="p-toolbar-group-left">
+        <div style="display: flex;">
+            <button type="button" pButton pRipple label="Сформировать" styleClass="p-button-sm"
+                class="p-button-warning mr-2" (click)="formReport()">
+            </button>
+
+            <div *ngIf="is_staff == 'True'  || is_metodist == 'True'" style="margin-left: 15px">
+                <p-selectButton class="asd" (onChange)="changetype()" [options]="stateOptions" [(ngModel)]="value"
+                    optionLabel="label" optionValue="value">
+                </p-selectButton>
+            </div>
+
+            <div *ngIf="value == 'org'" style="display: flex;">
+                <div class="p-field" style="margin-left: 15px; width: 450px;">
+                    <div class="p-inputgroup">
+                        <input class="cursor-pointer" [readonly]="true" type="text" pInputText
+                            [(ngModel)]="user_org_name" placeholder="Выберите организацию" (click)="openOrg()">
+                        <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                            class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                    </div>
+                </div>
+
+                <div class="p-field" style="margin-left: 15px;">
+                    <div class="p-inputgroup">
+                        <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="group_name"
+                            placeholder="Воспитательная группа" placeholder="Все группы" (click)="openGroup()">
+                        <button *ngIf="group_name !== ''" pButton pRipple type="button" (click)="clearGroup()"
+                            icon="pi pi-times" class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                        <button pButton pRipple type="button" (click)="openGroup()" icon="pi pi-pencil"
+                            class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="value !== 'org' && is_staff == 'True'" style="margin-left: 15px;">
+                <div class="p-field" style="padding-right: 10px;">
+                    <!-- <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Район :</label> -->
+                    <p-dropdown [showClear]="showClearRegion" [options]="regiontypes" placeholder="Все регионы"
+                        (onChange)="changeregion()" (onClick)="getregion()" (onClear)="clearRegion()"
+                        optionLabel="name_region" optionValue="id_region" appendTo="body" [(ngModel)]="id_region">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field" style="margin-left: 15px;">
+                <p-calendar appendTo="body" placeholder="Дата" [(ngModel)]="period" dateFormat="dd.mm.yy"
+                    [readonlyInput]="true" [showIcon]="true" inputId="calendar"></p-calendar>
+            </div>
+        </div>
+    </div>
+
+    <div class=" p-toolbar-group-right">
+        <!-- <div style="padding-right: 10px;">
+            <button type="button" pButton pRipple icon="pi pi-file-excel" styleClass="p-button-sm"
+                (click)="exportExcel()" class="p-button-success mr-2" label="Выгрузить в XLS" pTooltip="XLS"
+                tooltipPosition="bottom"></button>
+        </div> -->
+
+        <!-- <div style="padding-right: 10px;">
+            <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
+                styleClass="p-button-sm" (click)="reset()"></button>
+        </div> -->
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+            (click)="closeform()"></button>
+    </div>
+</p-toolbar>
+
+<p-toolbar styleClass="p-toolbar-sm" *ngIf="value == 'org'">
+    <div class="p-toolbar-group-left">
+
+        <button pButton pRipple type="button" label="Все ({{countallstatus.common}})" class="p-button-text"
+            (click)="form('')"></button>
+
+        <button pButton pRipple type="button" label="Присутствуют ({{countallstatus.vis}})" class="p-button-text"
+            (click)="form('2')"></button>
+
+        <button pButton pRipple type="button" label="Ожидают отметки ({{countallstatus.notvis}})" class="p-button-text"
+            (click)="form('1')"></button>
+
+        <button pButton pRipple type="button" label="Болеют ({{countallstatus.boln}})" class="p-button-text"
+            (click)="form('3')"></button>
+
+        <button pButton pRipple type="button" label="Незарегистрированные ({{countallstatus.notreg}})"
+            class="p-button-text" (click)="form('0')"></button>
+
+        <button pButton pRipple type="button" label="В отпуске ({{countallstatus.otp}})" class="p-button-text"
+            (click)="form('4')"></button>
+
+        <button pButton pRipple type="button" label="Ложное фото ({{countallstatus.fake}})" class="p-button-text"
+            (click)="form('10')"></button>
+
+        <button pButton pRipple type="button" label="Фото на проверке ({{countallstatus.check}})" class="p-button-text"
+            (click)="form('11')"></button>
+
+    </div>
+</p-toolbar>
+
+<p-card *ngIf="loading && value == 'org'">
+    <p-table [value]="reportOrg" [scrollable]="true" scrollHeight="calc(96vh - 190px)"
+        styleClass="p-datatable-sm p-datatable-striped  p-datatable-gridlines" selectionMode="single">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 12px;">
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:25%; text-align:center">ФИО ребенка</th>
+                <th style="width:10%; text-align:center">ИИН ребенка</th>
+                <th style="width:25%; text-align:center">Воспитатель</th>
+                <th style="width:20%; text-align:center">Группа</th>
+                <th style="width:15%; text-align:center">Статус</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-child class="cursor-pointer" let-ri="rowIndex">
+            <tr class="cursor-pointer" (dblclick)="openChild(child, child.status)">
+                <td style="text-align:center; font-weight: 700;">{{ ri + 1 }}</td>
+                <td style="padding-left: 10px; font-weight: 700;">{{child.name}}</td>
+                <td style="text-align:center; font-weight: 700;">{{child.iin}}</td>
+                <td style="padding-left: 10px;">{{child.first_name}}</td>
+                <td style="padding-left: 10px;">{{child.group_name}}</td>
+                <td style="text-align:center"><span class="plan-org"
+                        [ngClass]="getColorClass(child.status)">{{child.statusname}}</span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">Нет записей</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+<div class="card" *ngIf="loading && value == 'reg'">
+    <p-table [value]="report" [scrollable]="true" scrollHeight="calc(100vh - 150px)"
+        styleClass="p-datatable-sm p-datatable-striped  p-datatable-gridlines" selectionMode="single" sortMode="single"
+        groupRowsBy="id_region" rowGroupMode="subheader" dataKey="name_region">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 12px;">
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:60%; text-align:center">Организация</th>
+                <th style="width:6%; text-align:center">Всего детей</th>
+                <th style="width:6%; text-align:center">Присутствуют</th>
+                <th style="width:6%; text-align:center">Болеют</th>
+                <th style="width:6%; text-align:center">В отпуске</th>
+                <th style="width:6%; text-align:center">Ложное фото</th>
+                <th style="width:5%; text-align:center">Отсутствуют</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="groupheader" let-child let-expanded="expanded">
+            <tr style="font-size: 12px; font-weight: 700;">
+                <td colspan="2">
+                    <button type="button" pButton pRipple [pRowToggler]="child"
+                        class="p-button-text p-button-rounded p-button-plain mr-4"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    <span class="font-bold">{{child.name_region}}</span>
+                </td>
+                <td style="text-align:center;">{{calculateAllChild(child.id_region)}}</td>
+                <td style="text-align:center;">{{calculateStatus2(child.id_region)}}</td>
+                <td style="text-align:center;">{{calculateStatus3(child.id_region)}}</td>
+                <td style="text-align:center;">{{calculateStatus4(child.id_region)}}</td>
+                <td style="text-align:center;">{{calculateStatus10(child.id_region)}}</td>
+                <td style="text-align:center;">{{calculateNotVis(child.id_region)}}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="rowexpansion" let-childs class="cursor-pointer" let-ri="rowIndex">
+            <tr style="font-size: 11px" class="cursor-pointer">
+                <td style="text-align:center; font-weight: 700;">{{ ri + 1 }}</td>
+                <td (dblclick)="formbyOrg(childs)" style="padding-left: 10px;">{{childs.org_name}}</td>
+                <td style="text-align:center">{{childs.all_childs}}</td>
+                <td style="text-align:center">{{childs.status_2}}</td>
+                <td style="text-align:center">{{childs.status_3}}</td>
+                <td style="text-align:center">{{childs.status_4}}</td>
+                <td style="text-align:center"><span class="plan-reg"
+                        [ngClass]="getColorClassForNumber(childs.status_10)">{{childs.status_10}}</span></td>
+                <td style="text-align:center">{{childs.not_vis}}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">Нет записей</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 12px;">
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:25%; text-align:center">ФИО ребенка</th>
+                <th style="width:10%; text-align:center">ИИН ребенка</th>
+                <th style="width:25%; text-align:center">Воспитатель</th>
+                <th style="width:20%; text-align:center">Группа</th>
+                <th style="width:15%; text-align:center">Статус</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

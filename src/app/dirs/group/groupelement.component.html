@@ -1,0 +1,162 @@
+<div class="p-fluid">
+    <div style="display: flex;">
+        <div style="padding: 0 10px 10px 0; width: 60%;">
+            <label>Наименование <span style="color: red;">*</span></label>
+            <div class="p-inputgroup" [formGroup]="groupForm">
+                <span class="p-inputgroup-addon"><i class="pi pi-home"></i></span>
+                <input [readOnly]=true type="text" pInputText formControlName="nameGrFormControl"
+                    [(ngModel)]="groupView.group_name" />
+            </div>
+            <small class="p-invalid"
+                *ngIf="!groupForm.controls['nameGrFormControl'].valid&&groupForm.controls['nameGrFormControl'].dirty">
+                Введите наименование</small>
+        </div>
+
+        <!-- <div style="padding: 0 10px 10px 0; width: 20%;" [formGroup]="groupForm">
+            <label>Категория группы <span style="color: red;">*</span></label>
+            <p-dropdown [options]="groupCategory" formControlName="CategoryFormControl" placeholder="Выберите категорию"
+                [(ngModel)]="groupView.category">
+            </p-dropdown>
+            <small class="p-invalid"
+                *ngIf="!groupForm.controls['CategoryFormControl'].valid&&groupForm.controls['CategoryFormControl'].dirty">
+                Выберите категорию</small>
+        </div> -->
+
+        <div style="padding-bottom: 10px; width: 40%;">
+            <label>Возрастная группа</label>
+            <p-dropdown [options]="groupAgeOptions" placeholder="Выберите возр. группу"
+                [(ngModel)]="groupView.group_age"></p-dropdown>
+        </div>
+    </div>
+    <div style="display: flex;  width: 100%;">
+        <div style="padding-right: 10px;  width: 40%;">
+            <label>Воспитатель <span style="color: red;">*</span></label>
+            <div class="p-inputgroup" [formGroup]="groupForm">
+                <input [readOnly]="true" type="text" pInputText formControlName="MetodistFormControl"
+                    [(ngModel)]="groupView.first_name" />
+                <span class="p-inputgroup-addon cursor-pointer" (click)="selectMetodist()">...</span>
+                <!-- <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-text"
+                    (click)="openMetodist()" style="color:rgb(94, 115, 233)"></button> -->
+            </div>
+            <small class="p-invalid"
+                *ngIf="!groupForm.controls['MetodistFormControl'].valid&&groupForm.controls['MetodistFormControl'].dirty">
+                Выберите воспитателя</small>
+        </div>
+
+        <div style="width: 40%; padding-right: 10px;">
+            <label>ИИН воспитателя</label>
+            <div class="p-inputgroup">
+                <input [readOnly]="true" type="string" pInputText [(ngModel)]="groupView.username" />
+            </div>
+        </div>
+
+        <div style="width: 20%;" [formGroup]="groupForm">
+            <label>Количество мест <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <input type="number" [min]="1" pInputText [(ngModel)]="groupView.group_count"
+                    formControlName="CountFormControl" />
+            </div>
+            <small class="p-invalid"
+                *ngIf="!groupForm.controls['CountFormControl'].valid&&groupForm.controls['CountFormControl'].dirty">
+                Выберите воспитателя</small>
+        </div>
+    </div>
+    <div style="width:100%; padding-top: 10px;">
+        <label style="color: red;">* - обязательные поля</label>
+    </div>
+</div>
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <!-- <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"
+            [disabled]="!saved">
+        </button> -->
+    </div>
+    <div class="p-toolbar-group-right">
+        <span class="p-input-icon-left" style="margin-right: 10px;">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="searchchild" (change)="search()"
+                placeholder="поиск по имени..." />
+        </span>
+    </div>
+</p-toolbar>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="childOfGroup.list" sortMode="single" [scrollable]="true" scrollHeight="calc(76vh - 215px)"
+        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">ИИН ребенка</th>
+                <th style="text-align:center">ФИО ребенка</th>
+                <th style="text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-childlet let-ri="rowIndex">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(childlet)">
+                <td style="text-align:center">
+                    {{ri + 1}}
+                </td>
+                <td style="text-align:center">
+                    {{childlet.iin}}
+                </td>
+                <td>
+                    {{childlet.name}}
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            (click)="onRowEdit(childlet)"></button>
+                        <!-- <button pButton pRipple type="button" icon="pi pi-trash" (click)="deleteChild(childlet)"
+                            class="p-button-rounded p-button-text"></button> -->
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">ИИН ребенка</th>
+                <th style="text-align:center">ФИО ребенка</th>
+                <th style="text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body">
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div style="position: relative;">
+    <p-paginator [showCurrentPageReport]="true" [rows]="25" [totalRecords]="childOfGroup.total"
+        (onPageChange)="paginatorClick($event)"
+        currentPageReportTemplate="Указано {{(pageEvent-1)*25 + 1}} - {{childOfGroup.last}} из {{childOfGroup.total}} элементов">
+    </p-paginator>
+</div>
+
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
+
+<div style="padding-top: 10px;" class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Сохранить" icon="pi pi-check" [disabled]="!groupForm.valid"
+        class="p-button-outlined p-button-success" (click)="saveGroup()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div>

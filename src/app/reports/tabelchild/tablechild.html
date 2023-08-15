@@ -1,0 +1,182 @@
+<p-toolbar styleClass="p-toolbar-sm">
+        <div class="p-toolbar-group-left">
+                <div style="padding-right: 10px;">
+                        <button pButton pRipple label="Сформировать" styleClass="p-button-sm" class="p-button-warning"
+                                (click)="form()">
+                        </button>
+                </div>
+
+                <div class="p-field" style="margin-right: 10px; width: 50rem;">
+
+                        <div class="p-inputgroup">
+                                <input class="cursor-pointer" [readonly]="true" type="text" pInputText
+                                        [(ngModel)]="user_org_name" placeholder="Выберите организацию"
+                                        (click)="openOrg()">
+                                <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                                        class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                        </div>
+                </div>
+
+                <div class="p-field" style="margin-right: 10px;">
+                        <div class="p-inputgroup">
+                                <input class="cursor-pointer" [readonly]="true" type="text" pInputText
+                                        [(ngModel)]="groupView.group_name" placeholder="Все группы"
+                                        (click)="openGroup()">
+                                <button *ngIf="groupView.group_name !== ''" pButton pRipple type="button"
+                                        (click)="clearGroup()" icon="pi pi-times"
+                                        class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                                <button pButton pRipple type="button" (click)="openGroup()" icon="pi pi-pencil"
+                                        class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                        </div>
+                </div>
+
+                <div style="margin-right: 10px;" class="cursor-pointer">
+                        <p-calendar appendTo="body" [(ngModel)]="rangeDates" view="month" dateFormat="MM yy"
+                                (onSelect)="changedate(rangeDates)" [readonlyInput]="true" [showIcon]="true">
+                        </p-calendar>
+                </div>
+        </div>
+
+        <div class=" p-toolbar-group-right">
+                <button type="button" pButton pRipple icon="pi pi-file-excel" styleClass="p-button-sm"
+                        (click)="exportExcel()" class="p-button-success mr-2" label="Выгрузить в XLS" pTooltip="XLS"
+                        tooltipPosition="bottom" id="sheetjsexport"></button>
+
+                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined"
+                        styleClass="p-button-sm" (click)="closeform()"></button>
+        </div>
+</p-toolbar>
+<p-toolbar styleClass="p-toolbar-sm">
+        <div class="p-toolbar-group-left">
+                <div style="padding-right: 15px;">
+                        <span [ngClass]="getColorClass(17)">
+                                Выходной</span>
+                </div>
+                <div style="padding-right: 15px;">
+                        <span [ngClass]="getColorClass(13)">
+                                Больничный</span>
+                </div>
+                <div style="padding-right: 15px;">
+                        <span [ngClass]="getColorClass(14)">
+                                Отпуск</span>
+                </div>
+                <div style="padding-right: 15px;">
+                        <span [ngClass]="getColorClass(15)">
+                                Отсутствие</span>
+                </div>
+                <div style="padding-right: 15px;">
+                        <span [ngClass]="getColorClass(12)">
+                                Посещение</span>
+                </div>
+
+                <div>
+                        <span class="edited-class">Отредактировано</span>
+                </div>
+        </div>
+</p-toolbar>
+
+<p-overlayPanel #op [style]="{width: '70px'}">
+        <ng-template pTemplate>
+                <div class="align-items-center justify-content-left">
+                        <p-button label="НЯ" styleClass="p-button-link" (onClick)="editstatus('5', op)">
+                                <div style="padding-right: 3px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-person-slash" viewBox="0 0 16 16">
+                                                <path
+                                                        d="M13.879 10.414a2.501 2.501 0 0 0-3.465 3.465l3.465-3.465Zm.707.707-3.465 3.465a2.501 2.501 0 0 0 3.465-3.465Zm-4.56-1.096a3.5 3.5 0 1 1 4.949 4.95 3.5 3.5 0 0 1-4.95-4.95ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+                                        </svg>
+                                </div>
+                        </p-button>
+                </div>
+                <div class="align-items-center justify-content-left">
+                        <p-button label="Б" styleClass="p-button-link" (onClick)="editstatus('3', op)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-thermometer-low" viewBox="0 0 16 16">
+                                        <path
+                                                d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V9.5a.5.5 0 0 1 1 0v1.585a1.5 1.5 0 0 1 1 1.415z" />
+                                        <path
+                                                d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z" />
+                                </svg>
+                        </p-button>
+                </div>
+                <div class="align-items-center justify-content-left">
+                        <p-button label="О" styleClass="p-button-link" (onClick)="editstatus('4', op)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-airplane" viewBox="0 0 16 16">
+                                        <path
+                                                d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Zm.894.448C7.111 2.02 7 2.569 7 3v4a.5.5 0 0 1-.276.447l-5.448 2.724a.5.5 0 0 0-.276.447v.792l5.418-.903a.5.5 0 0 1 .575.41l.5 3a.5.5 0 0 1-.14.437L6.708 15h2.586l-.647-.646a.5.5 0 0 1-.14-.436l.5-3a.5.5 0 0 1 .576-.411L15 11.41v-.792a.5.5 0 0 0-.276-.447L9.276 7.447A.5.5 0 0 1 9 7V3c0-.432-.11-.979-.322-1.401C8.458 1.159 8.213 1 8 1c-.213 0-.458.158-.678.599Z" />
+                                </svg>
+                        </p-button>
+                </div>
+        </ng-template>
+</p-overlayPanel>
+
+<p-card *ngIf="loading">
+        <p-table [value]="report" [scrollable]="true" scrollHeight="calc(100vh - 230px)"
+                styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" selectionMode="single"
+                id="TableToExport">
+                <ng-template pTemplate="header">
+                        <tr>
+                                <th style="text-align:center">Номер</th>
+                                <th style="text-align:center">ФИО ребенка</th>
+                                <th style="text-align:center">ИИН ребенка</th>
+                                <th style="text-align:center">Группа</th>
+                                <th style="text-align:center" *ngFor="let day of days">{{day}}</th>
+                        </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-child class="cursor-pointer" let-ri="rowIndex">
+                        <tr class="cursor-pointer">
+                                <td style="text-align:center; font-weight: 700;">{{ ri + 1 }}</td>
+                                <td style="font-weight: 700;" (dblclick)="openChild(child)">{{child.childname}}</td>
+                                <td style="font-weight: 700;">{{child.iin}}</td>
+                                <td style="text-align:center; font-weight: 700;">{{child.group_name}}</td>
+                                <td *ngFor="let day of days"
+                                        (dblclick)="openChildDay(child, day-1, child['day_' + day])"
+                                        style="text-align:center" (contextmenu)="thismonth
+                                        && day <= dayforaccess
+                                        && (child['day_' + day] !== 12 || child['day_' + day] === 12 && is_staff === 'True')
+                                        && child['day_' + day] !== 10 && child['day_' + day] !== 20
+                                        && child['day_' + day] !== 17 
+                                        && (child.id_group == child.child_group || is_staff === 'True')
+                                        ? op.toggle($event) : hideOP(op); onContextMenu($event, child, day);">
+                                        <span [ngClass]="getColorClass(child['day_' + day])">
+                                                {{getValue(child['day_' + day])}}</span>
+                                </td>
+                        </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                        <tr>
+                                <td colspan="33">Нет записей</td>
+                        </tr>
+                </ng-template>
+        </p-table>
+</p-card>
+
+<div *ngIf="!loading" class="card">
+        <p-table [value]="tableData" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                        <tr style="font-size: 14px;">
+                                <th style="text-align:center">Номер</th>
+                                <th style="text-align:center">ФИО ребенка</th>
+                                <th style="text-align:center">Группа</th>
+                                <th style="text-align:center" *ngFor="let day of days">{{day}}</th>
+                        </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                        <tr>
+                                <td>
+                                        <p-skeleton></p-skeleton>
+                                </td>
+                                <td>
+                                        <p-skeleton></p-skeleton>
+                                </td>
+                                <td>
+                                        <p-skeleton></p-skeleton>
+                                </td>
+                                <td *ngFor="let day of days">
+                                        <p-skeleton></p-skeleton>
+                                </td>
+                        </tr>
+                </ng-template>
+        </p-table>
+</div>

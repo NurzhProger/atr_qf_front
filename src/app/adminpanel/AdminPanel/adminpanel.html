@@ -1,0 +1,194 @@
+<header>
+  <div class="main-header">
+    <nav class="navbar bg-indigo p-1" style="--bs-bg-opacity: .3;">
+      <div style="cursor: pointer;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasScrolling"
+          aria-labelledby="offcanvasScrollingLabel" style="width:270px;">
+          <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasScrollingLabel">Главное меню</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+              <li class="nav-item dropdown">
+                <h4 class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">
+                  <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-cog"></i>
+                  Администрирование
+                </h4>
+                <ul class="dropdown-menu dropdown-menu-start">
+                  <li class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                      (click)="openTab('request-list', 'Заявки', '')">
+                      <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-envelope"></i>
+                      Заявки на регистрацию
+                    </h4>
+                  </li>
+                  <li class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                      (click)="openTab('org-list', 'Организации', '')">
+                      <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-building"></i>
+                      Организации
+                    </h4>
+                  </li>
+                  <li class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas" (click)="openTab('sub-list', 'Иерархия', '')">
+                      <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-building"></i>
+                      Иерархия организаций
+                    </h4>
+                  </li>
+                  <li *ngIf="editfakephoto == 'True'" class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                      (click)="openTab('app-fake', 'Фэйковые фото', '')">
+                      <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-book"></i>
+                      Фейковые данные
+                    </h4>
+                  </li>
+                  <li class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                      (click)="openTab('app-dashboard', 'Сведения по посещаемости', '')">
+                      <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-list"></i>
+                      Сведения посещаемости
+                    </h4>
+                  </li>
+                  <li class="nav-item">
+                    <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                      (click)="openTab('app-priceservice', 'Цены обслуживания', '')">
+                      <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-building"></i>
+                      Цены обслуживания
+                    </h4>
+                  </li>
+                </ul>
+              </li>
+
+
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                  (click)="openTab('groupadm-list', 'Воспитательные группы', '')">
+                  <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-building"></i>
+                  Воспитательные группы
+                </h4>
+              </li>
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas" (click)="openTab('childadm-list', 'Дети', '')">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-users"></i>Дети
+                </h4>
+              </li>
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                  (click)="openTab('metodistadm-list', 'Воспитатели', '')">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-user"></i>
+                  Воспитатели
+                </h4>
+              </li>
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                  (click)="openTab('tablechild-element', 'Табель посещаемости', '')">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-book"></i>
+                  Табель посещаемости
+                </h4>
+              </li>
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                  (click)="openTab('plan-list', 'Дневной план', '')">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-list"></i>
+                  Дневной план
+                </h4>
+              </li>
+
+              <li class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas" href="" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false" (click)="exit()">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-sign-out"></i>
+                  Выход
+                </h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; cursor: pointer;">
+        <a>
+          <p-button label={{username}} styleClass="p-button-link p-button-plain" (click)="op.toggle($event)">
+          </p-button>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<p-toast></p-toast>
+<p-overlayPanel #op [style]="{width: '180px'}">
+  <ng-template pTemplate>
+    <div class="align-items-center justify-content-left gap-2">
+      <p-button label="Изменить пароль" styleClass="p-button-link" (click)="changepass()"><i
+          style="padding-right: 15px; font-size: 0.4cm;" class="pi pi-key"></i></p-button>
+    </div>
+    <div class="align-items-center justify-content-left gap-2">
+      <p-button label="Выйти из системы" styleClass="p-button-link" (click)="exit()"><i
+          style="padding-right: 15px; font-size: 0.4cm;" class="pi pi-sign-out"></i></p-button>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+
+<div class="bg-indigo p-1" style="--bs-bg-opacity: .3; height:95%">
+  <!-- <p-toast></p-toast> -->
+  <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" id="maintabgroup">
+    <ng-template #templateRef let-context='context'>
+      <mat-tab>
+
+        <ng-template mat-tab-label>
+          <span>{{context.title}}</span>
+        </ng-template>
+
+        <org-list *ngIf="context.selector=='org-list'" (closeEvent)="removetab()">
+        </org-list>
+
+        <groupadm-list *ngIf="context.selector=='groupadm-list'" (closeEvent)="removetab()">
+        </groupadm-list>
+
+        <childadm-list *ngIf="context.selector=='childadm-list'" (closeEvent)="removetab()">
+        </childadm-list>
+
+        <metodistadm-list *ngIf="context.selector=='metodistadm-list'" (closeEvent)="removetab()">
+        </metodistadm-list>
+
+        <visitchild-element *ngIf="context.selector=='visitchild-element'" (closeEvent)="removetab()">
+        </visitchild-element>
+
+        <tablechild-element *ngIf="context.selector=='tablechild-element'" (closeEvent)="removetab()"
+          [user_org_id]="user_org_id" [user_org_name]="user_org_name" [is_staff]="is_staff">
+        </tablechild-element>
+
+        <plan-list *ngIf="context.selector=='plan-list'" (closeEvent)="removetab()" [user_org_id]="user_org_id"
+          [user_org_name]="user_org_name" [is_staff]="is_staff" [id_region]="user_id_region"
+          [is_metodist]="is_metodist">
+        </plan-list>
+
+        <request-list *ngIf="context.selector=='request-list'" (closeEvent)="removetab()">
+        </request-list>
+
+        <startpage-admin *ngIf="context.selector=='startpage-admin'" (closeEvent)="removetab()">
+        </startpage-admin>
+
+        <sub-list *ngIf="context.selector=='sub-list'" (closeEvent)="removetab()">
+        </sub-list>
+
+        <app-fake *ngIf="context.selector=='app-fake'" (closeEvent)="removetab()">
+        </app-fake>
+
+        <app-dashboard *ngIf="context.selector=='app-dashboard'" (closeEvent)="removetab()">
+        </app-dashboard>
+
+        <app-priceservice *ngIf="context.selector=='app-priceservice'" (closeEvent)="removetab()">
+        </app-priceservice>
+
+      </mat-tab>
+    </ng-template>
+  </mat-tab-group>
+</div>
+<div #viewContainerRef>
+</div>

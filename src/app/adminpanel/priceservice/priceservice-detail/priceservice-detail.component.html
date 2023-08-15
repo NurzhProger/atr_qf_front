@@ -1,0 +1,156 @@
+<div style="padding-bottom: 10px; width: 100%;">
+    <h5>Наименование организации</h5>
+    <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
+        <input type="text" [readOnly]="true" pInputText [ngModel]="name_obl" />
+    </div>
+</div>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="result" responsiveLayout="scroll"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2" style="text-align:center">Номер</th>
+                <th rowspan="2" style="text-align:center">Наименование группы</th>
+                <th colspan="2" style="text-align:center">Обычные регионы</th>
+                <th colspan="2" style="text-align:center">В зоне экологии</th>
+                <th colspan="2" style="text-align:center">В зоне радиации</th>
+            </tr>
+            <tr>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price let-ri="rowIndex">
+            <tr>
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td>
+                    {{price.name_price}}
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.norm_gor" pEditableColumnField="norm_gor">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.norm_gor" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.norm_gor }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.norm_selo" pEditableColumnField="norm_selo">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.norm_selo" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.norm_selo }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.eco_gor" pEditableColumnField="eco_gor">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.eco_gor" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.eco_gor }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.eco_selo" pEditableColumnField="eco_selo">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.eco_selo" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.eco_selo }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.rad_gor" pEditableColumnField="rad_gor">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.rad_gor" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.rad_gor }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align:center" [pEditableColumn]="price.rad_selo" pEditableColumnField="rad_selo">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="price.rad_selo" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ price.rad_selo }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="2" style="text-align:center">Номер</th>
+                <th rowspan="2" style="text-align:center">Наименование группы</th>
+                <th colspan="2" style="text-align:center">Обычные регионы</th>
+                <th colspan="2" style="text-align:center">В зоне экологии</th>
+                <th colspan="2" style="text-align:center">В зоне радиации</th>
+            </tr>
+            <tr>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+                <th style="text-align:center">город</th>
+                <th style="text-align:center">село</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="loading" style="padding-top: 40px;" class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Сохранить" icon="pi pi-check" class="p-button-outlined p-button-success"
+        (click)="saveprice()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div>

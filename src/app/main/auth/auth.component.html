@@ -1,0 +1,39 @@
+<p-toast></p-toast>
+<div class="bg-success p-2" style="--bs-bg-opacity: .3; width: 100%; height: 100%;">
+  <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center;">
+    <div style="width: 25%;" class="p-fluid">
+      <br>
+      <br>
+      <br>
+      <h1 style="display: flex; justify-content: center; text-align: center;position: relative;"
+        class="h3 mb-3 font-weight-normal">Авторизация</h1>
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label>Логин/БИН</label>
+        <div class="p-inputgroup">
+          <input type="text" pInputText id="firstname" [(ngModel)]="login" />
+        </div>
+      </div>
+
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="pass">Пароль</label>
+        <p-password [(ngModel)]="pass" id="pass" [toggleMask]="true" [feedback]="false">
+        </p-password>
+      </div>
+      <div style="padding-bottom: 10px;">
+        <button pButton pRipple
+          style="width: 100%; min-height: 100%; display: flex; justify-content: center; text-align: center;position: relative;"
+          type="button" class="p-button-success" [disabled]="loading" (click)="checkAuth()">
+          <ng-container *ngIf="loading">
+            <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+          </ng-container>
+          <ng-container *ngIf="!loading">
+            Войти
+          </ng-container>
+        </button>
+      </div>
+      <button pButton pRipple style="width: 100%;" type="button" label="Регистрация" (click)="registration()"
+        [disabled]="loading"></button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,69 @@
+<p-toolbar styleClass="p-toolbar-sm">
+    <div class="p-toolbar-group-left">
+
+        <button type="button" pButton pRipple label="Сформировать" styleClass="p-button-sm"
+            class="p-button-warning mr-2" (click)="form()">
+        </button>
+
+        <div class="p-field" style="margin-right: 10px;">
+            <div class="p-inputgroup">
+                <input [readonly]="true" type="text" pInputText [(ngModel)]="user_org_name"
+                    placeholder="Выберите организацию">
+                <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                    class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+            </div>
+        </div>
+
+        <div style="display: flex;">
+            <div class="p-field" style="margin-left: 15px;">
+                <!-- <h6>Воспитательная группа *</h6> -->
+                <div class="p-inputgroup">
+                    <input [readonly]="true" type="text" pInputText [(ngModel)]="groupView.group_name"
+                        placeholder="Воспитательная группа" placeholder="Все группы">
+                    <button *ngIf="groupView.group_name !== ''" pButton pRipple type="button" (click)="clearGroup()"
+                        icon="pi pi-times" class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                    <button pButton pRipple type="button" (click)="openGroup()" icon="pi pi-pencil"
+                        class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                </div>
+            </div>
+
+            <div class="p-field" style="margin-left: 15px;">
+                <!-- <h6 for="publication_date">Период</h6> -->
+                <p-calendar appendTo="body" placeholder="Дата" [(ngModel)]="period" dateFormat="dd.mm.yy"
+                    [readonlyInput]="true" [showIcon]="true" inputId="calendar"></p-calendar>
+            </div>
+        </div>
+    </div>
+    <div class=" p-toolbar-group-right">
+        <button type="button" pButton pRipple icon="pi pi-file-excel" styleClass="p-button-sm" (click)="exportExcel()"
+            class="p-button-success mr-2" label="Выгрузить в XLS" pTooltip="XLS" tooltipPosition="bottom"></button>
+
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+            (click)="closeform()"></button>
+    </div>
+</p-toolbar>
+
+<p-card>
+    <p-table [value]="report" [scrollable]="true" scrollHeight="calc(100vh - 190px)"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" selectionMode="single">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:10%; text-align:center">Номер</th>
+                <th style="width:30%; text-align:center">ФИО ребенка</th>
+                <th style="width:10%; text-align:center">Группа</th>
+                <th style="width:30%; text-align:center">Воспитатель</th>
+                <th style="width:20%; text-align:center">Статус</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-child class="cursor-pointer" let-ri="rowIndex">
+            <tr class="cursor-pointer" (dblclick)="openChild(child)">
+                <td style="text-align:center">{{ ri + 1 }}</td>
+                <td style="padding-left: 10px;">{{child.name}}</td>
+                <td style="padding-left: 10px;">{{child.group_name}}</td>
+                <td style="padding-left: 10px;">{{child.first_name}}</td>
+                <td style="text-align:center"><span [ngClass]="getColorClass(child.status)">{{child.statusname}}</span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

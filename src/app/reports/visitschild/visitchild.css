@@ -1,0 +1,33 @@
+.green-class {
+    background-color: rgb(29, 161, 29);
+}
+
+.yellow-class {
+    background-color: rgb(163, 163, 8);
+}
+
+.pink-class {
+    background-color: rgb(230, 165, 165);
+}
+
+.red-class {
+    background-color: rgb(235, 18, 18);
+}
+
+.arctic-class {
+    background-color: rgb(22, 184, 212);
+}
+
+.gray-class {
+    background-color: rgb(151, 153, 161);
+}
+
+span {
+    display: inline;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    font-size: 12px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    border-radius: 4px;
+}

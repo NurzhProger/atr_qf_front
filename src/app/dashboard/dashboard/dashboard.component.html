@@ -1,0 +1,304 @@
+<div>
+    <p-toolbar>
+        <div class="p-toolbar-group-start" style="display: flex; width: 95%;">
+            <div style="padding-right: 10px;">
+                <button pButton pRipple label="Сформировать" styleClass="p-button-sm" class="p-button-warning"
+                    (click)="form()">
+                </button>
+            </div>
+
+            <div style="margin-right: 10px;">
+                <p-selectButton class="asd" (onChange)="changetype()" [options]="stateOptions" [(ngModel)]="value"
+                    optionLabel="label" optionValue="value">
+                </p-selectButton>
+            </div>
+
+            <div class="p-field" style="padding-right: 10px;">
+                <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Область :</label>
+                <p-dropdown id="id_obl" [showClear]="showClearObl" [options]="oblasttypes" placeholder="Все области"
+                    (onClear)="clearObl()" (onChange)="changeobl()" [(ngModel)]="id_obl" optionLabel="name_obl"
+                    optionValue="id_obl" appendTo="body">
+                </p-dropdown>
+            </div>
+
+            <div class="p-field" *ngIf="showClearObl" style="padding-right: 10px;">
+                <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Район :</label>
+                <p-dropdown [showClear]="showClearRegion" [options]="regiontypes" placeholder="Все регионы"
+                    (onChange)="changeregion()" (onClick)="getregion()" (onClear)="clearRegion()"
+                    optionLabel="name_region" optionValue="id_region" appendTo="body" [(ngModel)]="id_region">
+                </p-dropdown>
+            </div>
+
+            <div *ngIf="showClearRegion" class="p-field" style="margin-right: 10px; width: 40rem;">
+                <div class="p-inputgroup">
+                    <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="user_org_name"
+                        placeholder="Все организации" (click)="openOrg()">
+                    <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
+                        class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                    <button *ngIf="user_org_name !== ''" pButton pRipple type="button" (click)="clearOrg()"
+                        icon="pi pi-times" class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="p-toolbar-group-end">
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+                (click)="closeform()"></button>
+        </div>
+    </p-toolbar>
+</div>
+<div *ngIf="loading" class="card">
+    <p-treeTable [value]="report" [scrollable]="true" scrollHeight="calc(90vh - 180px)" selectionMode="single"
+        styleClass="p-treetable-sm p-treetable-striped p-treetable-gridlines">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th rowspan="2" style="text-align:center; width: 25%;">Наименование</th>
+                <th rowspan="2" style="text-align:center">Кол-во групп</th>
+                <th rowspan="2" style="text-align:center">План, кол-во детей</th>
+                <th rowspan="2" style="text-align:center">Факт, кол-во детей</th>
+                <th colspan="2" style="text-align:center;">
+                    Январь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Февраль
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Март
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Апрель
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Май
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Июнь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Июль
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Август
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Сентябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Октябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Ноябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Декабрь
+                </th>
+            </tr>
+            <tr>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr [ttRow]="rowNode" (dblclick)="showDetail(rowData)">
+                <td style="width: 25%;" [ngClass]="getColorClass(rowData.sub)">
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{ rowData.obl_name }}
+                </td>
+                <td style="text-align:center;" [ngClass]="getColorClass(rowData.sub)">{{ rowData.count_gr}}</td>
+                <td style="text-align:center;" [ngClass]="getColorClass(rowData.sub)">{{ rowData.plan_count}}</td>
+                <td style="text-align:center;" [ngClass]="getColorClass(rowData.sub)">{{ rowData.plan_count}}</td>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td style="text-align:center;" [ngClass]="getColorClass(rowData.sub)">{{rowData['plan_' + i]}}</td>
+                    <td style="text-align:center;" [ngClass]="getColorClass(rowData.sub)">{{rowData['v_' + i ]}}</td>
+                </ng-container>
+            </tr>
+        </ng-template>
+
+    </p-treeTable>
+</div>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th rowspan="2" style="text-align:center; width: 30%;">Наименование</th>
+                <th rowspan="2" style="text-align:center">Кол-во групп</th>
+                <th rowspan="2" style="text-align:center">План, кол-во детей</th>
+                <th rowspan="2" style="text-align:center">Факт, кол-во детей</th>
+                <th colspan="2" style="text-align:center;">
+                    Январь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Февраль
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Март
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Апрель
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Май
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Июнь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Июль
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Август
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Сентябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Октябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Ноябрь
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Декабрь
+                </th>
+            </tr>
+            <tr>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+                <th style="text-align:center">План</th>
+                <th style="text-align:center">Факт</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body">
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -1,0 +1,153 @@
+<div class="p-fluid">
+    <div style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>ФИО пользователя <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText formControlName="nameFormControl" [(ngModel)]="orguser.fullname" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['nameFormControl'].valid&&metodistForm.controls['nameFormControl'].dirty">
+            Введите ФИО пользователя</small>
+
+    </div>
+
+    <div style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>Полное наименование организации <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+            <input type="text" pInputText formControlName="orgnameFormControl" [(ngModel)]="orguser.org_name" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['orgnameFormControl'].valid&&metodistForm.controls['orgnameFormControl'].dirty">
+            Введите наименование</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>БИН организации <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+            <input type="string" pInputText [(ngModel)]="orguser.bin" formControlName="IINFormControl" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['IINFormControl'].valid&&metodistForm.controls['IINFormControl'].dirty">
+            Введите корректный БИН организации</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px; width: 100%;" [formGroup]="metodistForm">
+        <label>Область <span style="color: red;">*</span></label>
+        <p-dropdown [options]="oblasttypes" placeholder="Выберите область" (onClick)="getoblast()"
+            (onChange)="changeobl()" optionLabel="name_obl" optionValue="id_obl" appendTo="body"
+            [(ngModel)]="orguser.id_obl" formControlName="OblFormControl">
+        </p-dropdown>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px; width: 100%;" [formGroup]="metodistForm">
+        <label>Район <span style="color: red;">*</span></label>
+        <p-dropdown [options]="regiontypes" placeholder="Выберите район" (onClick)="getregion()"
+            (onChange)="changeregion()" optionLabel="name_region" optionValue="id_region" appendTo="body"
+            [(ngModel)]="orguser.id_region" formControlName="RegionFormControl" [disabled]="oblasttypes.length == 0">
+        </p-dropdown>
+    </div>
+
+    <div style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>Адрес <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+            <input type="text" pInputText formControlName="adressFormControl" [(ngModel)]="orguser.adress" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['adressFormControl'].valid&&metodistForm.controls['adressFormControl'].dirty">
+            Введите адрес</small>
+    </div>
+
+    <div style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>Телефон <span style="color: red;">*</span></label>
+        <p-inputMask mask="+7 (999) 999-9999" [(ngModel)]="orguser.phonenumber" placeholder="+7 (999) 999-9999"
+            formControlName="phoneFormControl"></p-inputMask>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['phoneFormControl'].valid&&metodistForm.controls['phoneFormControl'].dirty">
+            Введите номер телефона</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label for="email">Почта <span style="color: red;">*</span></label>
+        <input type="text" pInputText id="email" placeholder="email@example.com" formControlName="emailFormControl"
+            [(ngModel)]="orguser.email" required />
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['emailFormControl'].valid&&metodistForm.controls['emailFormControl'].dirty">Введите
+            эл. почту.</small>
+    </div>
+
+    <div style="display:flex; padding-bottom: 10px;">
+        <div class="p-field" style="width: 30%; padding-right: 10px;" [formGroup]="metodistForm">
+            <label for="type_org">Тип организации <span style="color: red;">*</span></label>
+            <p-dropdown [options]="orgOptions" id="type_org" formControlName="typeFormControl"
+                placeholder="Выберите тип" optionLabel="label" optionValue="value" appendTo="body"
+                [(ngModel)]="orguser.type_org">
+            </p-dropdown>
+            <small class="p-invalid"
+                *ngIf="!metodistForm.controls['typeFormControl'].valid&&metodistForm.controls['typeFormControl'].dirty">Выберите
+                тип.</small>
+        </div>
+
+        <div class="p-field" style="width: 25%; padding-right: 10px;" [formGroup]="metodistForm">
+            <label for="type_city">Признак город/село <span style="color: red;">*</span></label>
+            <p-dropdown [options]="cityOptions" id="type_city" formControlName="cityFormControl"
+                placeholder="Выберите тип" optionLabel="label" optionValue="value" appendTo="body"
+                [(ngModel)]="orguser.type_city">
+            </p-dropdown>
+            <small class="p-invalid"
+                *ngIf="!metodistForm.controls['cityFormControl'].valid&&metodistForm.controls['cityFormControl'].dirty">Выберите
+                тип.</small>
+        </div>
+
+        <div class="p-field" style="width: 25%; padding-right: 10px;" [formGroup]="metodistForm">
+            <label for="type_ecolog">Признак экологии <span style="color: red;">*</span></label>
+            <p-dropdown [options]="ecologOptions" id="type_ecolog" formControlName="ecologFormControl"
+                placeholder="Выберите тип" optionLabel="label" optionValue="value" appendTo="body"
+                [(ngModel)]="orguser.type_ecolog">
+            </p-dropdown>
+            <small class="p-invalid"
+                *ngIf="!metodistForm.controls['ecologFormControl'].valid&&metodistForm.controls['ecologFormControl'].dirty">Выберите
+                тип.</small>
+        </div>
+
+        <div class="p-field" style="width: 20%;">
+            <label for="count">Проектная мощность ДО</label>
+            <div class="p-inputgroup">
+                <input style="font-size: 11px;" type="number" id="count" [min]="1" pInputText
+                    [(ngModel)]="orguser.count_place" />
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label for="PasswordFormControl">Пароль *</label>
+        <p-password formControlName="PasswordFormControl" [(ngModel)]="orguser.password" [toggleMask]="true"
+            [feedback]="false" (change)="change(orguser.password)">
+        </p-password>
+        <small class=" p-invalid"
+            *ngIf="!metodistForm.controls['PasswordFormControl'].valid&&metodistForm.controls['PasswordFormControl'].dirty">
+            <li>Мин. длина пароля 8 символов</li>
+
+        </small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;">
+        <label for="secondpassword">Повторите пароль</label>
+        <p-password [(ngModel)]="secondpassword" [toggleMask]="true" [feedback]="false"
+            [disabled]="!metodistForm.controls['PasswordFormControl'].valid&&!metodistForm.controls['PasswordFormControl'].dirty"
+            (ngModelChange)="change(orguser.password)">
+        </p-password>
+    </div> -->
+    <div style="width:100%; padding-bottom: 10px;">
+        <label style="color: red;">* - обязательные поля</label>
+    </div>
+
+    <label>Местоположение</label>
+    <div style="width: 100%; height: 500px;" id="map"></div>
+
+</div>
+<div style="padding-top: 10px;" class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Отправить" icon="pi pi-check" [disabled]="!metodistForm.valid"
+        class="p-button-outlined p-button-success" (click)="saveRequest()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div>

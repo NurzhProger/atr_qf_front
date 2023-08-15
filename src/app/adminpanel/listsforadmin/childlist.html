@@ -1,0 +1,119 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <div style="padding-right: 10px;">
+            <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
+                (click)="openNew()"></button>
+        </div>
+        <button pButton pRipple label="импорт" icon="pi pi-download" styleClass="p-button"
+            class="p-button-success p-mr-2" (click)="openUpload()"></button>
+    </div>
+
+    <div class="p-toolbar-group-right">
+
+        <span class="p-input-icon-right" style="margin-right: 10px;">
+            <input pInputText type="text" [(ngModel)]="searchchild" (change)="getchildlist()" placeholder="поиск..."
+                id="search-input" (ngModelChange)="onInputChange(searchchild)" #searchInput />
+            <i class="pi pi-times clear-icon" (click)="clearInput()"
+                [ngStyle]="{'display': showClearIcon ? 'block' : 'none'}"></i>
+        </span>
+
+        <div style="padding-right: 10px;">
+            <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
+                styleClass="p-button-sm" (click)="getchildlist()"></button>
+        </div>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+            (click)="closeform()"></button>
+    </div>
+
+</p-toolbar>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">Организация</th>
+                <th style="text-align:center">ИИН ребенка</th>
+                <th style="text-align:center">ФИО ребенка</th>
+                <th style="text-align:center">Группа ребенка</th>
+                <th style="text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="child.list" [scrollable]="true" scrollHeight="calc(100vh - 210px)" selectionMode="single"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="width: 3%; text-align:center">Номер</th>
+                <th style="width: 10%; text-align:center">ИИН ребенка</th>
+                <th style="width: 30%; text-align:center">ФИО ребенка</th>
+                <th style="width: 40%; text-align:center">Организация</th>
+                <th style="width: 10%; text-align:center">Группа ребенка</th>
+                <th style="width: 7%; text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-childlet let-ri="rowIndex" class="cursor-pointer">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(childlet)">
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td style="text-align:center">
+                    {{childlet.iin}}
+                </td>
+                <td>
+                    <img *ngIf="childlet.icon_url" [alt]="childlet.name" [src]="childlet.icon_url"
+                        style="width: 0.6cm; height: 0.6cm; vertical-align: middle; opacity: 100%; border-radius: calc(50% + 10px);">
+                    <span class="image-text" style="margin-left: 0.8cm">{{childlet.name}}</span>
+                </td>
+                <td>
+                    {{childlet.org_name}}
+                </td>
+                <td>
+                    {{childlet.group_name}}
+                </td>
+                <td style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-user-minus" matTooltip="Удалить посещение" (click)="deletevisit(childlet)"
+                            class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-camera" matTooltip="Снять с регистрации" (click)="deregister(childlet)"
+                            class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" matTooltip="Изменить"
+                            (click)="onRowEdit(childlet)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" matTooltip="Удалить" (click)="deleteChild(childlet)"
+                            class="p-button-rounded p-button-text"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div style="position: relative;">
+    <p-paginator [showCurrentPageReport]="true" [rows]="25" [totalRecords]="child.total"
+        (onPageChange)="paginatorClick($event)"
+        currentPageReportTemplate="Указано {{(pageEvent-1)*25 + 1}} - {{child.last}} из {{child.total}} элементов">
+    </p-paginator>
+</div>
+
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>

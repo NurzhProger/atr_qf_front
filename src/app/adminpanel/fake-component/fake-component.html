@@ -1,0 +1,102 @@
+<p-toolbar>
+    <div class="p-toolbar-group-start">
+        <div *ngIf="images">
+            <div style="display: flex;">
+                <div style="padding-right: 10px;">
+                    <h5>ФИО ребенка</h5>
+                    <div class="p-inputgroup">
+                        <!-- <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span> -->
+                        <input [readOnly]="true" type="text" pInputText [ngModel]="images.childname"
+                            style="width: 25rem;" />
+                    </div>
+                </div>
+
+                <div style="padding-right: 10px;">
+                    <h5>Группа ребенка</h5>
+                    <div class="p-inputgroup">
+                        <!-- <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span> -->
+                        <input [readOnly]="true" type="text" pInputText [ngModel]="images.group_name"
+                            style="width: 10rem;" />
+                    </div>
+                </div>
+
+                <div style="padding-right: 10px;">
+                    <h5>Организация ребенка</h5>
+                    <div class="p-inputgroup">
+                        <!-- <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span> -->
+                        <input [readOnly]="true" type="text" pInputText [ngModel]="images.org_name"
+                            style="width: 40rem;" />
+                    </div>
+                </div>
+
+                <div style="padding-right: 10px;">
+                    <h5>Воспитатель</h5>
+                    <div class="p-inputgroup">
+                        <!-- <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span> -->
+                        <input [readOnly]="true" type="text" pInputText [ngModel]="images.username"
+                            style="width: 25rem;" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="p-toolbar-group-end">
+        <div style="display: flex;">
+            <div style="padding-right: 10px;">
+                <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
+                    styleClass="p-button-sm" (click)="reset()"></button>
+            </div>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+                (click)="closeform()"></button>
+        </div>
+    </div>
+</p-toolbar>
+
+
+
+<div *ngIf="images" style="padding-top: 10px">
+    <div *ngIf="!visible">
+        <div style="padding-top: 40px; height: 500px; display: flex;"
+            class="flex align-items-center justify-content-center gap-2">
+            <img [src]="images.image_url" alt="Фото отсутствует"
+                style="opacity: 100%; height: 500px; width: 500px; justify-content: center;">
+        </div>
+    </div>
+    <div *ngIf="visible" style="padding-top: 10px; height: 500px;" class="flex gap-2">
+        <div style="width: 24%; margin-right: 25px;">
+            <img [src]="images.image_url" alt="Фото отсутствует" style="width: 23%; height: 500px; opacity: 100%;">
+        </div>
+
+        <div *ngIf="otherimages.length > 0" style="width: 24%; margin-right: 25px;">
+            <img [src]="otherimages[0].image_url" alt="Фото отсутствует"
+                style="width: 23%; height: 500px; opacity: 100%;">
+        </div>
+
+        <div *ngIf="otherimages.length > 1" style="width: 24%; margin-right: 25px;">
+            <img [src]="otherimages[1].image_url" alt="Фото отсутствует"
+                style="width: 23%; height: 500px; opacity: 100%;">
+        </div>
+
+        <div *ngIf="otherimages.length > 2" style="width: 24%;">
+            <img [src]="otherimages[2].image_url" alt="Фото отсутствует"
+                style="width: 23%; height: 500px; opacity: 100%;">
+        </div>
+    </div>
+
+    <div style="padding: 40px 0;" class="flex align-items-center justify-content-center gap-2">
+        <button [disabled]="!images" pButton pRipple label="Реальное фото" icon="pi pi-check" class="p-button-success"
+            (click)="sendresult('real')"></button>
+        <button [disabled]="!images" pButton pRipple label="Фэйковое фото" icon="pi pi-times" class="p-button-danger"
+            (click)="sendresult('fake')"></button>
+        <button pButton pRipple label="Показать другие фото" icon="pi pi-images" class="p-button-help"
+            (click)="showFoto()"></button>
+    </div>
+</div>
+
+<div *ngIf="!images" style="padding: 40px 0; height: 500px; display: flex;"
+    class="flex align-items-center justify-content-center gap-2">
+    <h5>Нет фото для отображения</h5>
+</div>

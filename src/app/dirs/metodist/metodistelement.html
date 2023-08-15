@@ -1,0 +1,65 @@
+<div class="p-fluid">
+
+    <div style="padding-bottom: 10px;">
+        <label>ФИО воспитателя <span style="color: red;">*</span></label>
+        <div class="p-inputgroup" [formGroup]="metodistForm">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input [readOnly]="readonly" type="text" pInputText id="nameFormControl" formControlName="nameFormControl"
+                [(ngModel)]="metodistView.first_name" autofocus />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['nameFormControl'].valid&&metodistForm.controls['nameFormControl'].dirty">
+            Введите ФИО воспитателя</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label>ИИН воспитателя <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+            <input [readOnly]="readonly" type="string" pInputText [(ngModel)]="metodistView.username"
+                formControlName="IINFormControl" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['IINFormControl'].valid&&metodistForm.controls['IINFormControl'].dirty">
+            Введите ИИН воспитателя</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label for="email">Почта <span style="color: red;">*</span></label>
+        <input [readOnly]="readonly" type="text" pInputText id="email" placeholder="email@example.com"
+            formControlName="emailFormControl" [(ngModel)]="metodistView.email" />
+        <small class="p-invalid"
+            *ngIf="!metodistForm.controls['emailFormControl'].valid&&metodistForm.controls['emailFormControl'].dirty">Введите
+            эл. почту.</small>
+    </div>
+
+    <div class="p-field" style="padding-bottom: 10px;" [formGroup]="metodistForm">
+        <label for="PasswordFormControl">Пароль <span style="color: red;">*</span></label>
+        <p-password formControlName="PasswordFormControl" [(ngModel)]="metodistView.password" [toggleMask]="true"
+            [feedback]="false" (change)="change(metodistView.password)">
+        </p-password>
+        <small class=" p-invalid"
+            *ngIf="!metodistForm.controls['PasswordFormControl'].valid&&metodistForm.controls['PasswordFormControl'].dirty">
+            <li>Мин. длина пароля 8 символов</li>
+
+        </small>
+    </div>
+
+    <div class="p-field">
+        <label for="secondpassword">Повторите пароль</label>
+        <p-password [(ngModel)]="secondpassword" [toggleMask]="true" [feedback]="false"
+            [disabled]="!metodistForm.controls['PasswordFormControl'].valid&&!metodistForm.controls['PasswordFormControl'].dirty"
+            (ngModelChange)="change(metodistView.password)">
+        </p-password>
+    </div>
+</div>
+
+<div style="width:100%; padding: 10px 0;">
+    <label style="color: red;">* - обязательные поля</label>
+</div>
+<div class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Сохранить" icon="pi pi-check"
+        [disabled]="!(metodistForm.valid && changepass && (metodistView.password==secondpassword))"
+        class="p-button-outlined p-button-success" (click)="saveMetodist()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div>

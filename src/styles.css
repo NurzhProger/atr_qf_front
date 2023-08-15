@@ -1,0 +1,17 @@
+html,
+body {
+    height: 100%;
+    font-family: var(--font-family);
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 50%;
+}

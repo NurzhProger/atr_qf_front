@@ -1,0 +1,65 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+    </div>
+    <div class="p-toolbar-group-right">
+        <div style="padding-right: 10px;">
+            <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
+                styleClass="p-button-sm"></button>
+        </div>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+            (click)="closeform()"></button>
+    </div>
+</p-toolbar>
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="text-align:center; width: 5%;">Номер</th>
+                <th style="text-align:center">Регион</th>
+                <th style="text-align:center; width: 5%;">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="request" sortField="name_obl" sortMode="single" [scrollable]="true"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="text-align:center; width: 5%;">Номер</th>
+                <th style="text-align:center">Регион</th>
+                <th style="text-align:center; width: 5%;">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-org let-ri="rowIndex" class="cursor-pointer">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(org.id, org.name)">
+                <td style="text-align: center; font-weight: 700;">
+                    {{ri + 1}}
+                </td>
+                <td>{{org.name}}
+                <td style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

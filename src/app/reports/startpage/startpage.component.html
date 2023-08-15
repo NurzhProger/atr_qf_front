@@ -1,0 +1,87 @@
+<div style="overflow: auto; height: 100%;">
+
+  <div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; padding-bottom: 20px;">
+
+    <mat-card style="width: 25%;  margin: 5px;">
+      <mat-card-title style="text-align: center;">{{response[0].quantityofgroup}}</mat-card-title>
+      <mat-card-subtitle style="text-align: center;">Всего групп</mat-card-subtitle>
+    </mat-card>
+
+    <mat-card style="width: 25%;  margin: 5px;">
+      <mat-card-title style="text-align: center;">{{response[0].quantityofchild}}</mat-card-title>
+      <mat-card-subtitle style="text-align: center;">Всего детей</mat-card-subtitle>
+    </mat-card>
+
+    <mat-card style="width: 25%;  margin: 5px;">
+      <mat-card-title style="text-align: center;">{{response[0].quantityofmetodist}}</mat-card-title>
+      <mat-card-subtitle style="text-align: center;">Всего воспитателей</mat-card-subtitle>
+    </mat-card>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+    <div style="width: 75%;">
+      <p-accordion class="header" [activeIndex]="0">
+        <p-accordionTab class="p-accordion">
+          <ng-template pTemplate="header">
+            <h3>Основная информация</h3>
+          </ng-template>
+          <div style="padding-bottom: 10px; width: 100%;">
+            <h5>ФИО пользователя: {{response[0].fullname}}</h5>
+          </div>
+          <div style="padding-bottom: 10px;">
+            <h5>Полное наименование организации: {{response[0].org_name}}</h5>
+          </div>
+
+          <div class="p-field" style="padding-bottom: 10px;">
+            <h5>БИН организации: {{response[0].bin}}</h5>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            <h5>Адрес: {{response[0].adress}}</h5>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            <h5>Телефон: {{response[0].phonenumber}}</h5>
+          </div>
+
+          <div class="p-field" style="padding-bottom: 10px;">
+            <h5 for="email">Почта: {{response[0].email}}</h5>
+          </div>
+
+          <div class="p-field" style="padding-bottom: 10px;">
+            <h5>Тип организации: {{response[0].type_org}}</h5>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            <h5>Признак город/село: {{response[0].type_city}}</h5>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            <h5>Признак экологии: {{response[0].type_ecolog}}</h5>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            <h5>Проектная мощность: {{response[0].count_place}}</h5>
+          </div>
+
+        </p-accordionTab>
+
+        <p-accordionTab class="p-accordion">
+          <ng-template pTemplate="header">
+            <h3>Местоположение</h3>
+          </ng-template>
+          <!-- <h5>Местоположение</h5> -->
+          <div style="width: 100%; height: calc(55vh - 110px);" id="map">
+            <ya-map [center]="[latitude, longitude]" [zoom]="15">
+              <ya-placemark [geometry]="[latitude, longitude]"></ya-placemark>
+            </ya-map>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+
+    </div>
+  </div>
+
+
+
+</div>

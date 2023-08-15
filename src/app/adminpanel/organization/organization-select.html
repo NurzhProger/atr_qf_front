@@ -1,0 +1,118 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <button pButton pRipple label="выбрать" icon="pi pi-check" class="p-button-success p-mr-2"
+            (click)="onSelected(selected)"></button>
+    </div>
+    <div class="p-toolbar-group-right">
+
+        <div class="p-field" style="padding-right: 10px;">
+            <!-- <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Район :</label> -->
+            <p-dropdown [showClear]="showClearRegion" [options]="regiontypes" placeholder="Все регионы"
+                (onChange)="changeregion()" (onClick)="getregion()" (onClear)="clearRegion()" optionLabel="name_region"
+                optionValue="id_region" appendTo="body" [(ngModel)]="id_region">
+            </p-dropdown>
+        </div>
+
+        <span class="p-input-icon-left" style="margin-right: 10px;">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="searchorg" (change)="reset()" placeholder="поиск..." />
+        </span>
+    </div>
+</p-toolbar>
+
+<div *ngIf="loading" class="card">
+    <p-table [value]="request.list" [scrollable]="true" scrollHeight="calc(85vh - 240px)" selectionMode="single"
+        [(selection)]="selected" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">Регион</th>
+                <th style="text-align:center">БИН организации</th>
+                <th style="text-align:center">Наименование организации</th>
+                <th style="text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="groupheader" let-sale let-expanded="expanded">
+            <tr>
+                <td colspan="6">
+                    <button type="button" pButton pRipple [pRowToggler]="sale"
+                        class="p-button-text p-button-rounded p-button-plain mr-4"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    <span class="font-bold">{{sale.name_region}}</span>
+                </td>
+            </tr>
+        </ng-template> -->
+        <!-- fsdfsdf -->
+        <ng-template pTemplate="body" let-org let-ri="rowIndex" class="cursor-pointer">
+            <tr class="cursor-pointer" (dblclick)="onRowSelect(org)" [pSelectableRowDblClick]="org"
+                [pSelectableRow]="org">
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td>
+                    {{org.name_region}}
+                </td>
+                <td style="text-align:center">
+                    {{org.id_org}}
+                </td>
+                <td>
+                    {{org.org_name}}
+                </td>
+                <td style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            (click)="onRowEdit(org.id_org)"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<!-- <div style="padding-top: 10px;" class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Выбрать" icon="pi pi-check" class="p-button-outlined p-button-success"
+        (click)="selectOrg()"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"
+        (click)="close()"></button>
+</div> -->
+
+
+
+<div *ngIf="!loading" class="card">
+    <p-table [value]="tableData" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr style="font-size: 14px;">
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">Регион</th>
+                <th style="text-align:center">БИН организации</th>
+                <th style="text-align:center">Наименование организации</th>
+                <th style="text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div style="position: relative;">
+    <p-paginator [showCurrentPageReport]="true" [rows]="25" [totalRecords]="request.total"
+        (onPageChange)="paginatorClick($event)"
+        currentPageReportTemplate="Указано {{(pageEvent-1)*25 + 1}} - {{request.last}} из {{request.total}} элементов">
+    </p-paginator>
+</div>
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
