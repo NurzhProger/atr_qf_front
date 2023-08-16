@@ -16,11 +16,11 @@ declare var myLocalStorage: any; //Локальное хранилище
 export class organizationelementComponent {
 
     constructor(private httpservice: HttpService,
-        public metodistSelectref: DynamicDialogRef,
-        public childelementref: DynamicDialogRef,
+        private metodistSelectref: DynamicDialogRef,
+        private childelementref: DynamicDialogRef,
         private messageServiceorg: MessageService,
-        public metodistSelectdialogService: DialogService,
-        public orgelementconfig: DynamicDialogConfig) { }
+        private metodistSelectdialogService: DialogService,
+        private orgelementconfig: DynamicDialogConfig) { }
 
     orgView: orguser = {
         id: '',
@@ -37,8 +37,8 @@ export class organizationelementComponent {
         type_org: '',
         type_city: '',
         type_ecolog: '',
-        checkedgps: '',
-        count_place: 0
+        count_place: 0,
+        checkedgps: ''
     };
     oblasttypes: any = [];
     regiontypes: any = [];
@@ -63,10 +63,10 @@ export class organizationelementComponent {
         { label: 'В зоне радиации', value: 'rad' },
         { label: 'В зоне экологии', value: 'eco' }
     ];
-    
+
     gpsOptions = [
-        {label: 'Да', value: true},
-        {label: 'Нет', value: false}
+        { label: 'Да', value: true },
+        { label: 'Нет', value: false }
     ]
 
     ngOnInit() {
@@ -144,7 +144,7 @@ export class organizationelementComponent {
     }
 
     saveOrg() {
-        
+
         let mass = [this.orgView]
         this.httpservice
             .org_edit(mass)
