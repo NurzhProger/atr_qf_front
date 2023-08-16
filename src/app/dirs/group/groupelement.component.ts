@@ -178,7 +178,7 @@ export class groupelementComponent {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.httpservice
-                    .child_edit('del', childListView.id_group, [{ "iin": childListView.iin }])
+                    .child_edit('del', childListView.id_group, [{ "iin": childListView.iin, "id_org": childListView.id_org }])
                     .subscribe((data) => (
                         this.getchildlist(),
                         this.messageServiceSaveEl.add({ severity: 'success', summary: 'Успешно', detail: 'Ребенок удален из группы!' }),
