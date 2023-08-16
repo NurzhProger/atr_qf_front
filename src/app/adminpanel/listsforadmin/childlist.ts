@@ -174,6 +174,7 @@ export class childlistAdmComponent {
                     .subscribe(
                         (data) => (this.messageServicedelChildList.add({ severity: 'success', summary: 'Успешно', detail: 'Посещение ребенка удалено!' })),
                         (error) => (this.messageServicedelChildList.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось изменить данные ребенка!' })))
+                this.confirmationServiceChild.close()
             },
             reject: () => {
                 this.confirmationServiceChild.close()
@@ -192,10 +193,9 @@ export class childlistAdmComponent {
                 this.httpservice
                     .child_edit('clearface', '', mass)
                     .subscribe(
-                        (data) => (this.messageServicedelChildList.add({ severity: 'success', summary: 'Успешно', detail: 'Ребенок снят с регистрации!' }),
-                            this.confirmationServiceChild.close()),
-                        (error) => (this.messageServicedelChildList.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }),
-                            this.confirmationServiceChild.close()))
+                        (data) => (this.messageServicedelChildList.add({ severity: 'success', summary: 'Успешно', detail: 'Ребенок снят с регистрации!' })),
+                        (error) => (this.messageServicedelChildList.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+                this.confirmationServiceChild.close()
             },
             reject: () => {
                 this.confirmationServiceChild.close()
@@ -213,9 +213,9 @@ export class childlistAdmComponent {
                     .child_edit('del', childListView.id_group, [{ "iin": childListView.iin, "id_org": childListView.id_org }])
                     .subscribe((data) => (
                         this.messageServicedelChildList.add({ severity: 'success', summary: 'Успешно', detail: 'Ребенок удален!' }),
-                        this.confirmationServiceChild.close(), this.getchildlist(),
-                        this.confirmationServiceChild.close())
-                    )
+                        this.getchildlist()),
+                        (error) => (this.messageServicedelChildList.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+                this.confirmationServiceChild.close()
             },
             reject: () => {
                 this.confirmationServiceChild.close();
