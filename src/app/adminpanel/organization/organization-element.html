@@ -60,33 +60,40 @@
     </div>
 
     <div style="display:flex; padding-bottom: 10px;">
-        <div class="p-field" style="width: 30%; padding-right: 10px;">
+        <div class="p-field" style="width: 20%; padding-right: 10px;">
             <label for="type_org">Тип организации <span style="color: red;">*</span></label>
             <p-dropdown [options]="orgOptions" id="type_org" placeholder="Выберите тип" optionLabel="label"
                 optionValue="value" appendTo="body" [(ngModel)]="orgView.type_org">
             </p-dropdown>
         </div>
 
-        <div class="p-field" style="width: 25%; padding-right: 10px;">
+        <div class="p-field" style="width: 20%; padding-right: 10px;">
             <label for="type_city">Признак город/село <span style="color: red;">*</span></label>
             <p-dropdown [options]="cityOptions" id="type_city" placeholder="Выберите тип" optionLabel="label"
                 optionValue="value" appendTo="body" [(ngModel)]="orgView.type_city">
             </p-dropdown>
         </div>
 
-        <div class="p-field" style="width: 25%; padding-right: 10px;">
+        <div class="p-field" style="width: 20%; padding-right: 10px;">
             <label for="type_ecolog">Признак экологии <span style="color: red;">*</span></label>
             <p-dropdown [options]="ecologOptions" id="type_ecolog" placeholder="Выберите тип" optionLabel="label"
                 optionValue="value" appendTo="body" [(ngModel)]="orgView.type_ecolog">
             </p-dropdown>
         </div>
 
-        <div class="p-field" style="width: 20%;">
+        <div class="p-field" style="width: 20%; padding-right: 10px;">
             <label for="count">Проектная мощность ДО</label>
             <div class="p-inputgroup">
                 <input style="font-size: 11px;" type="number" id="count" [min]="1" pInputText
                     [(ngModel)]="orgView.count_place" />
             </div>
+        </div>
+
+        <div class="p-field" style="width: 20%;">
+            <label for="checkedgps">Проверять GPS <span style="color: red;">*</span></label>
+            <p-dropdown [options]="gpsOptions" id="checkedgps" placeholder="Выберите тип" optionLabel="label"
+                optionValue="value" appendTo="body" [(ngModel)]="orgView.checkedgps">
+            </p-dropdown>
         </div>
     </div>
 

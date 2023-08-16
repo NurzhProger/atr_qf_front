@@ -30,6 +30,7 @@ export class requestelementComponent {
         org_name: '',
         fullname: '',
         phonenumber: '',
+        checkedgps: '',
         adress: '',
         email: '',
         count_place: 0,

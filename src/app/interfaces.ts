@@ -25,6 +25,7 @@ export interface orguser {
     type_org: string,
     type_city: string,
     type_ecolog: string,
+    checkedgps: string,
     latitude: number,
     longitude: number
 }

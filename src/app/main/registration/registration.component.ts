@@ -38,6 +38,7 @@ export class registrationComponent {
         org_name: '',
         bin: '',
         phonenumber: '',
+        checkedgps: '',
         adress: '',
         email: '',
         count_place: 0,

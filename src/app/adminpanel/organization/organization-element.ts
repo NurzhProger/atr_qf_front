@@ -37,6 +37,7 @@ export class organizationelementComponent {
         type_org: '',
         type_city: '',
         type_ecolog: '',
+        checkedgps: '',
         count_place: 0
     };
     oblasttypes: any = [];
@@ -62,6 +63,11 @@ export class organizationelementComponent {
         { label: 'В зоне радиации', value: 'rad' },
         { label: 'В зоне экологии', value: 'eco' }
     ];
+    
+    gpsOptions = [
+        {label: 'Да', value: true},
+        {label: 'Нет', value: false}
+    ]
 
     ngOnInit() {
         this.id_org = this.orgelementconfig.data.id;
@@ -138,6 +144,7 @@ export class organizationelementComponent {
     }
 
     saveOrg() {
+        
         let mass = [this.orgView]
         this.httpservice
             .org_edit(mass)
