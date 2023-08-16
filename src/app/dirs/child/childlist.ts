@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpService } from '../../http.service';
 import { childelementComponent } from 'src/app/dirs/child/childelement';
@@ -23,6 +23,8 @@ export class childlistComponent {
         public dialogServiceUpload: DialogService) { }
     @Output() closeEvent = new EventEmitter<any>();
     @Output() newItemEvent = new EventEmitter<any>();
+    @Input() user_org_id = ''
+    @Input() user_org_name = ''
 
     pages: number[] = [];
     childListView!: childListView;
@@ -119,7 +121,7 @@ export class childlistComponent {
                 header: 'Создание ребенка',
                 width: 'calc(60%)',
                 height: 'calc(60%)',
-                data: { iin: '', id_group: '', type: 'add' }
+                data: { id_org: this.user_org_id, org_name: this.user_org_name, type: 'add' }
             });
 
         this.childListref.onClose.subscribe((save: boolean) => {

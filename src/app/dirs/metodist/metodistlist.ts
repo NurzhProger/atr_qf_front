@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfirmationService, Message, MessageService, PrimeNGConfig } from 'primeng/api';
 import { HttpService } from '../../http.service';
 import { metodistelementComponent } from 'src/app/dirs/metodist/metodistelement';
@@ -22,6 +22,8 @@ export class metodistlistComponent {
         private messageServicedelMetodList: MessageService) { }
     @Output() closeEvent = new EventEmitter<any>();
     @Output() newItemEvent = new EventEmitter<any>();
+    @Input() user_org_id = '';
+    @Input() user_org_name = '';
 
     pages: number[] = [];
     metodistViewList!: metodistView;
@@ -101,10 +103,10 @@ export class metodistlistComponent {
     }
 
     openNew() {
-
+        
         this.metodistViewList = {
-            id_org: '',
-            org_name: '',
+            id_org: this.user_org_id,
+            org_name: this.user_org_name,
             username: '',
             password: '',
             first_name: '',

@@ -48,6 +48,12 @@ export class metodistelementComponent {
             this.readonly = true;
         }
 
+        else if (this.type == 'add') {
+            this.metodistView.id_org = this.metodistelementconfig.data.data.id_org;
+            this.metodistView.org_name = this.metodistelementconfig.data.data.org_name;
+        }
+        
+
     }
 
     openOrg() {

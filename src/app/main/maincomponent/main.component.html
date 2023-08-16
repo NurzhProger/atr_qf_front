@@ -109,10 +109,12 @@
           [user_org_name]="user_org_name">
         </group-list>
 
-        <child-list *ngIf="context.selector=='child-list'" (closeEvent)="removetab()">
+        <child-list *ngIf="context.selector=='child-list'" (closeEvent)="removetab()" [user_org_id]="user_org_id"
+          [user_org_name]="user_org_name">
         </child-list>
 
-        <metodist-list *ngIf="context.selector=='metodist-list'" (closeEvent)="removetab()">
+        <metodist-list *ngIf="context.selector=='metodist-list'" (closeEvent)="removetab()" [user_org_id]="user_org_id"
+        [user_org_name]="user_org_name">
         </metodist-list>
 
         <visitchild-element *ngIf="context.selector=='visitchild-element'" (closeEvent)="removetab()">

@@ -70,6 +70,10 @@ export class childelementComponent {
                 .subscribe(
                     (data) => (this.childElement = data, this.childView = this.childElement.data[0]));
         }
+        else if (this.type == 'add') {
+            this.childView.id_org = this.childelementconfig.data.id_org;
+            this.childView.org_name = this.childelementconfig.data.org_name;
+        }
         else if (this.type == 'openfromtabel') {
             this.type_edit = true;
             this.childView = this.childelementconfig.data.child;
