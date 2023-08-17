@@ -3,9 +3,10 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HttpService } from '../../http.service';
 import { groupselectComponent } from '../group/groupselect';
-import { childView } from '..//../interfaces';
+import { childView, groupView } from '..//../interfaces';
 import { MessageService } from 'primeng/api';
 import { orgselectComponent } from 'src/app/adminpanel/organization/organization-select';
+import { groupelementComponent } from '../group/groupelement.component';
 declare var myLocalStorage: any; //Локальное хранилище
 
 
@@ -25,6 +26,7 @@ export class childelementComponent {
         private childelementconfig: DynamicDialogConfig) { }
 
     childForm: FormGroup;
+    groupViewElement: groupView;
     childView: childView = {
         iin: '',
         name: '',
@@ -55,7 +57,7 @@ export class childelementComponent {
         this.childForm = new FormGroup({
             orgFormControl: new FormControl('', Validators.required),
             namechildFormControl: new FormControl('', Validators.required),
-            GroupFormControl: new FormControl('', Validators.required),
+            // GroupFormControl: new FormControl('', Validators.required),
             dateFormControl: new FormControl('', Validators.required),
             IINFormControl: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12), this.iinLengthValidator()])
         });
@@ -86,6 +88,11 @@ export class childelementComponent {
                     (data) => (this.childElement = data, this.childView = this.childElement[0]),
                     (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })));
         }
+    }
+
+    clearGroup() {
+       this.childView.id_group = '';
+       this.childView.group_name = '';
     }
 
     selectGroup() {
@@ -123,8 +130,24 @@ export class childelementComponent {
     }
 
     openGroup() {
-
+        let res: any;
+        this.httpservice
+            .getgroupelement(this.childView.id_group)
+            .subscribe( 
+                (data) => (res = data, this.groupViewElement = res[0], this.openGroupComponent(this.groupViewElement)),
+                (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })))
     }
+
+    openGroupComponent(groupView: groupView){
+        this.groupSelectref = this.groupSelectdialogService.open(groupelementComponent,
+            {
+                header: 'Редактирование воспитательной группы',
+                width: '60%',
+                height: '100%',
+                data: { data: groupView, type: 'edit' }
+            })
+    }
+
 
     iinLengthValidator(): ValidatorFn {
         return (): { [key: string]: any } | null => {
@@ -182,7 +205,14 @@ export class childelementComponent {
         }
 
         mass = [this.childView];
-
+        if (this.childView.id_group == ''){
+            this.httpservice
+                .child_edit('del', this.childView.id_group, [{ "iin": this.childView.iin, 'id_org': this.childView.id_org }])
+                    .subscribe((data) => (this.messageServiceSaveElChild.add({ severity: 'success', summary: 'Успешно', detail: 'Данные ребенка сохранены!' }),
+                    this.childelementref.close(true)),
+                (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+                    
+        }
         this.httpservice
             .child_edit(this.type, this.id_group, mass)
             .subscribe(

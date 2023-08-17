@@ -68,6 +68,7 @@ export class groupelementComponent {
 
         this.groupView = this.groupelementconfig.data.data;
         this.type = this.groupelementconfig.data.type;
+
         if (this.groupView.id_group !== '*') {
             this.saved = true;
             this.getchildlist()

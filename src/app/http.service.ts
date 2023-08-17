@@ -14,8 +14,8 @@ declare var sessionStorage: any;
 export class HttpService {
   constructor(private http: HttpClient) { }
   // host = "http://192.168.5.26:9999/srv/";
-  // host = "http://192.168.5.31:9999/srv/";
-  host = "https://face06.qazna24.kz/srv/";
+  host = "http://192.168.5.31:9999/srv/";
+  // host = "https://face06.qazna24.kz/srv/";
 
   authuser(login: string, pass: string) {
     let myHeaders = new HttpHeaders()
@@ -66,6 +66,13 @@ export class HttpService {
       .set('Content-Type', 'application/json')
       .set('Authorization', sessionStorage.getItem('token'));
     return this.http.get(this.host + "getorgelement?id_org=" + id_org, { headers: myHeaders })
+  }
+
+  getgroupelement(id_group: string) {
+    let myHeaders = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', sessionStorage.getItem('token'));
+    return this.http.get(this.host + "getgroupelement?id_group=" + id_group, { headers: myHeaders })
   }
 
   grouplistadmin(page: number, groupname: string) {
