@@ -91,8 +91,8 @@ export class childelementComponent {
     }
 
     clearGroup() {
-       this.childView.id_group = '';
-       this.childView.group_name = '';
+        this.childView.id_group = '';
+        this.childView.group_name = '';
     }
 
     selectGroup() {
@@ -133,12 +133,12 @@ export class childelementComponent {
         let res: any;
         this.httpservice
             .getgroupelement(this.childView.id_group)
-            .subscribe( 
+            .subscribe(
                 (data) => (res = data, this.groupViewElement = res[0], this.openGroupComponent(this.groupViewElement)),
                 (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })))
     }
 
-    openGroupComponent(groupView: groupView){
+    openGroupComponent(groupView: groupView) {
         this.groupSelectref = this.groupSelectdialogService.open(groupelementComponent,
             {
                 header: 'Редактирование воспитательной группы',
@@ -205,20 +205,22 @@ export class childelementComponent {
         }
 
         mass = [this.childView];
-        if (this.childView.id_group == ''){
+        if (this.childView.id_group == '') {
             this.httpservice
                 .child_edit('del', this.childView.id_group, [{ "iin": this.childView.iin, 'id_org': this.childView.id_org }])
-                    .subscribe((data) => (this.messageServiceSaveElChild.add({ severity: 'success', summary: 'Успешно', detail: 'Данные ребенка сохранены!' }),
+                .subscribe((data) => (this.messageServiceSaveElChild.add({ severity: 'success', summary: 'Успешно', detail: 'Данные ребенка сохранены!' }),
                     this.childelementref.close(true)),
-                (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
-                    
+                    (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+
         }
-        this.httpservice
-            .child_edit(this.type, this.id_group, mass)
-            .subscribe(
-                (data) => (this.messageServiceSaveElChild.add({ severity: 'success', summary: 'Успешно', detail: 'Данные ребенка сохранены!' }),
-                    this.childelementref.close(true)),
-                (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+        else {
+            this.httpservice
+                .child_edit(this.type, this.id_group, mass)
+                .subscribe(
+                    (data) => (this.messageServiceSaveElChild.add({ severity: 'success', summary: 'Успешно', detail: 'Данные ребенка сохранены!' }),
+                        this.childelementref.close(true)),
+                    (error) => (this.messageServiceSaveElChild.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+        }
 
     }
 
