@@ -23,15 +23,18 @@ export class metodistlistadminComponent {
     @Output() closeEvent = new EventEmitter<any>();
     @Output() newItemEvent = new EventEmitter<any>();
     @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
+    @ViewChild('searchInputBIN', { static: true }) searchInputBIN: ElementRef;
 
     pages: number[] = [];
     metodistViewList!: metodistView;
     searchmetodist: string = '';
+    searchbin: string = '';
     metodist: any = [];
     pageEvent: number = 1;
     loading = false;
     tableData: any[] = [];
     showClearIcon: boolean = false;
+    showClearIconBIN: boolean = false;
 
     ngOnInit() {
         this.tableData = [
@@ -57,7 +60,7 @@ export class metodistlistadminComponent {
     getmetodistlist() {
         this.loading = false
         this.httpservice
-            .getmetodistlistadmin(this.pageEvent, this.searchmetodist)
+            .getmetodistlist(this.pageEvent, this.searchbin, this.searchmetodist)
             .pipe(
                 timeout(13000),
                 catchError(error => {
@@ -84,10 +87,22 @@ export class metodistlistadminComponent {
         this.showClearIcon = this.searchmetodist.trim().length > 0;
     }
 
+    onInputChangeBIN(newValue: string) {
+        this.searchbin = newValue;
+        this.showClearIconBIN = this.searchbin.trim().length > 0;
+    }
+
     clearInput() {
         this.searchmetodist = '';
         this.showClearIcon = false;
         this.searchInput.nativeElement.focus();
+        this.reset();
+    }
+
+    clearInputBIN() {
+        this.searchbin = '';
+        this.showClearIconBIN = false;
+        this.searchInputBIN.nativeElement.focus();
         this.reset();
     }
 

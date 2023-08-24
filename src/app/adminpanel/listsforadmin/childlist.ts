@@ -32,23 +32,37 @@ export class childlistAdmComponent {
     pages: number[] = [];
     childListView!: childListView;
     searchchild: string = '';
-    searchiin: string = '';
+    searchbin: string = '';
     child: any = [];
     pageEvent: number = 1;
     loading = false;
     tableData: any[] = [];
     showClearIcon: boolean = false;
+    showClearIconBIN: boolean = false;
     @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
+    @ViewChild('searchInputBIN', { static: true }) searchInputBIN: ElementRef;
 
     onInputChange(newValue: string) {
         this.searchchild = newValue;
         this.showClearIcon = this.searchchild.trim().length > 0;
     }
 
+    onInputChangeBIN(newValue: string) {
+        this.searchbin = newValue;
+        this.showClearIconBIN = this.searchbin.trim().length > 0;
+    }
+
     clearInput() {
         this.searchchild = '';
         this.showClearIcon = false;
         this.searchInput.nativeElement.focus();
+        this.getchildlist();
+    }
+
+    clearInputBIN() {
+        this.searchbin = '';
+        this.showClearIconBIN = false;
+        this.searchInputBIN.nativeElement.focus();
         this.getchildlist();
     }
 
@@ -76,7 +90,7 @@ export class childlistAdmComponent {
     getchildlist() {
         this.loading = false
         return this.httpservice
-            .getchildlistadmin(this.pageEvent, this.searchchild)
+            .getchildlist(this.pageEvent, this.searchbin, '', this.searchchild)
             .pipe(
                 timeout(13000),
                 catchError(error => {

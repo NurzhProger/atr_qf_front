@@ -57,7 +57,7 @@ export class grouplistadmComponent {
     getgrouplist() {
         this.loading = false
         this.httpservice
-            .grouplistadmin(this.pageEvent, this.searchgroup)
+            .getgrouplist(this.pageEvent, "", this.searchgroup)
             .pipe(
                 timeout(13000), // установка таймаута на 5 секунд
                 catchError(error => {

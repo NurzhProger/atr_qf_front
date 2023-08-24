@@ -55,7 +55,7 @@ export class metodistselectComponent {
 
     getmetodistlist() {
         return this.httpservice
-            .getmetodistlist(this.pageEvent, this.searchmetodist)
+            .getmetodistlist(this.pageEvent, '', this.searchmetodist)
             .subscribe(
                 (data) => (this.metodist = data, this.loading = true));
     }

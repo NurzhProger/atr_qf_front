@@ -51,14 +51,17 @@ export class childelementComponent {
     id_group: string = '';
     iin: string = '';
     today: string = '';
+    readonly = false
+    checkiin = false
+    user_id_org = ''
+    user_org_name = ''
     // visit_photo: string = '';
 
     ngOnInit() {
         this.childForm = new FormGroup({
             orgFormControl: new FormControl('', Validators.required),
             namechildFormControl: new FormControl('', Validators.required),
-            // GroupFormControl: new FormControl('', Validators.required),
-            dateFormControl: new FormControl('', Validators.required),
+            GroupFormControl: new FormControl('', Validators.required),
             IINFormControl: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12), this.iinLengthValidator()])
         });
 
@@ -70,9 +73,12 @@ export class childelementComponent {
             this.httpservice
                 .getchildbyiin(this.iin)
                 .subscribe(
-                    (data) => (this.childElement = data, this.childView = this.childElement.data[0]));
+                    (data) => (this.insertToFrom(data)));
         }
         else if (this.type == 'add') {
+            this.readonly = true
+            this.user_id_org = this.childelementconfig.data.id_org
+            this.user_org_name = this.childelementconfig.data.org_name
             this.childView.id_org = this.childelementconfig.data.id_org;
             this.childView.org_name = this.childelementconfig.data.org_name;
         }
@@ -93,6 +99,67 @@ export class childelementComponent {
     clearGroup() {
         this.childView.id_group = '';
         this.childView.group_name = '';
+    }
+
+    checkIIN() {
+        this.checkiin = true
+        this.httpservice
+            .getchildbyiin(this.childView.iin)
+            .subscribe(
+                (data) => (this.insertToFrom(data)))
+    }
+
+    changeIIN() {
+        if (this.checkiin) {
+            this.childView = {
+                iin: this.childView.iin,
+                name: '',
+                id_org: this.user_id_org,
+                org_name: this.user_org_name,
+                id_group: '',
+                group_name: '',
+                registered: '',
+                birthday: '',
+                gender: '',
+                category: '',
+                image_url: '',
+                visit_photo: ''
+            }
+        }
+    }
+
+    insertToFrom(child: any) {
+        if (child.data.length > 0) {
+            if (child.data[0].id_org !== '') {
+                this.readonly = true
+                this.childView = child.data[0]
+            }
+            else {
+                this.readonly = false
+                this.childView = child.data[0]
+                console.log(this.childView, this.user_id_org, this.user_org_name);
+
+                this.childView.id_org = this.user_id_org
+                this.childView.org_name = this.user_org_name
+            }
+        }
+        else {
+            this.readonly = false
+            this.childView = {
+                iin: this.childView.iin,
+                name: '',
+                id_org: this.user_id_org,
+                org_name: this.user_org_name,
+                id_group: '',
+                group_name: '',
+                registered: '',
+                birthday: '',
+                gender: '',
+                category: '',
+                image_url: '',
+                visit_photo: ''
+            }
+        }
     }
 
     selectGroup() {

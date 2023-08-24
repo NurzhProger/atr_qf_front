@@ -107,9 +107,11 @@ export class childselectComponent {
         this.httpservice
             .getchildbyiin(child.iin)
             .subscribe(
-                (data) => (this.childElement = data, this.childView = this.childElement.data[0],
+                (data) => (this.childElement = data,
+                    this.childView = this.childElement.data[0],
                     first_id_group = this.childView.id_group,
-                    this.childView.id_group = this.id_group, this.childView.group_name = this.group_name,
+                    this.childView.id_group = this.id_group,
+                    this.childView.group_name = this.group_name,
                     this.child_edit(this.childView, first_id_group)));
     }
 
@@ -160,7 +162,7 @@ export class childselectComponent {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.httpservice
-                    .child_edit('del', childListView.id_group, [{ "iin": childListView.iin }])
+                    .child_edit('del', childListView.id_group, [{ "iin": childListView.iin, "id_org": childListView.id_org, "id_group": this.childView.id_group }])
                     .subscribe((data) => (
                         this.messageServicedelChildSelect.add({ severity: 'success', summary: 'Успешно', detail: 'Ребенок удален!' }),
                         this.confirmationServiceChild.close(),

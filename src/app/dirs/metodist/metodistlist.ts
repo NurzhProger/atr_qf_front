@@ -58,7 +58,7 @@ export class metodistlistComponent {
         this.loading = false
 
         return this.httpservice
-            .getmetodistlist(this.pageEvent, this.searchmetodist)
+            .getmetodistlist(this.pageEvent, '', this.searchmetodist)
             .subscribe(
                 (data) => (this.metodist = data, this.loading = true));
     }
@@ -103,7 +103,7 @@ export class metodistlistComponent {
     }
 
     openNew() {
-        
+
         this.metodistViewList = {
             id_org: this.user_org_id,
             org_name: this.user_org_name,

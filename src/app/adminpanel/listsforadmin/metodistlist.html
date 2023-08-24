@@ -5,6 +5,13 @@
     </div>
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-right" style="margin-right: 10px;">
+            <input pInputText type="text" [(ngModel)]="searchbin" (change)="search()" placeholder="поиск по БИН..."
+                id="search-input-bin" (ngModelChange)="onInputChangeBIN(searchbin)" #searchInputBIN />
+            <i class="pi pi-times clear-icon" (click)="clearInputBIN()"
+                [ngStyle]="{'display': showClearIconBIN ? 'block' : 'none'}"></i>
+        </span>
+
+        <span class="p-input-icon-right" style="margin-right: 10px;">
             <input pInputText type="text" [(ngModel)]="searchmetodist" (change)="search()" placeholder="поиск..."
                 id="search-input" (ngModelChange)="onInputChange(searchmetodist)" #searchInput />
             <i class="pi pi-times clear-icon cursor-pointer" (click)="clearInput()"

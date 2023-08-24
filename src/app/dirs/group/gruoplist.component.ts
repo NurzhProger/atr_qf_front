@@ -69,8 +69,6 @@ export class grouplistComponent {
 
     onRowEdit(group: groupView) {
         this.groupViewList = group;
-        console.log(group);
-
 
         this.groupListref = this.dialogServiceGroupList.open(groupelementComponent,
             {

@@ -1,9 +1,10 @@
-<div *ngIf="!this.type_edit" class="p-fluid">
+<div *ngIf="type == 'edit'" class="p-fluid">
     <div style="padding-bottom: 10px; width: 100%;">
         <h5>ФИО ребенка *</h5>
         <div class="p-inputgroup" [formGroup]="childForm">
             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText formControlName="namechildFormControl" [(ngModel)]="childView.name" />
+            <input [readOnly]="readonly" type="text" pInputText formControlName="namechildFormControl"
+                [(ngModel)]="childView.name" />
         </div>
         <small class="p-invalid"
             *ngIf="!childForm.controls['namechildFormControl'].valid&&childForm.controls['namechildFormControl'].dirty">
@@ -13,43 +14,46 @@
     <div style="padding-bottom: 10px; width: 100%;">
         <h5>Организация *</h5>
         <div class="p-inputgroup" [formGroup]="childForm">
-            <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="childView.org_name"
-                placeholder="Выберите организацию" (click)="openOrg()" formControlName="orgFormControl">
-            <button pButton pRipple type="button" (click)="openOrg()" icon="pi pi-pencil"
-                class="p-button-outlined p-button-text" style="color:dimgrey"></button>
+            <input class="cursor-pointer" (click)="openOrg()" [readonly]="true" type="text" pInputText
+                [(ngModel)]="childView.org_name" placeholder="Выберите организацию" formControlName="orgFormControl">
+            <span class="p-inputgroup-addon cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                </svg>
+            </span>
+            <span class="p-inputgroup-addon cursor-pointer" (click)="openOrg()">...</span>
+
         </div>
+
         <small class="p-invalid"
             *ngIf="!childForm.controls['orgFormControl'].valid&&childForm.controls['orgFormControl'].dirty">
             Выберите организацию</small>
     </div>
+
     <div style="display: flex;  width: 100%;">
         <div style="width: 60%;">
             <div class="p-field" style="padding-bottom: 10px;" [formGroup]="childForm">
                 <h5>ИИН ребенка *</h5>
-                <div class="p-inputgroup">
-                    <input type="string" pInputText [(ngModel)]="childView.iin" formControlName="IINFormControl" />
-                </div>
+                <input type="string" pInputText [(ngModel)]="childView.iin" formControlName="IINFormControl" />
                 <small class="p-invalid"
                     *ngIf="!childForm.controls['IINFormControl'].valid&&childForm.controls['IINFormControl'].dirty">
                     Введите корректный ИИН</small>
             </div>
 
-            <div class="p-field" style="padding-bottom: 10px;" [formGroup]="childForm">
-                <h5 for="birthday">Дата рождения *</h5>
+            <div class="p-field" style="padding-bottom: 10px;">
+                <h5 for="birthday">Дата рождения</h5>
                 <p-calendar dateFormat="dd.mm.yy" (onSelect)="changedate()" appendTo="body"
-                    [(ngModel)]="childView.birthday" [showIcon]="true" formControlName="dateFormControl">
+                    [(ngModel)]="childView.birthday" [showIcon]="true">
                 </p-calendar>
-                <small class="p-invalid"
-                    *ngIf="!childForm.controls['dateFormControl'].valid&&childForm.controls['dateFormControl'].dirty">
-                    Введите дату рождения</small>
             </div>
 
-            <div class="p-field" style="padding-bottom: 10px;">
+            <div class="p-field" style="padding-bottom: 10px;" [formGroup]="childForm">
                 <h5>Воспитательная группа</h5>
                 <div class="p-inputgroup">
-                    <input type="text" [readOnly]="true" pInputText
-                        [(ngModel)]="childView.group_name" />
-                        <span class="p-inputgroup-addon cursor-pointer" (click)="clearGroup()">×</span>
+                    <input type="text" [readOnly]="true" pInputText [(ngModel)]="childView.group_name"
+                        formControlName="GroupFormControl" />
                     <span class="p-inputgroup-addon cursor-pointer" (click)="openGroup()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-files" viewBox="0 0 16 16">
@@ -59,9 +63,112 @@
                     </span>
                     <span class="p-inputgroup-addon cursor-pointer" (click)="selectGroup()">...</span>
                 </div>
-                <!-- <small class="p-invalid"
+                <small class="p-invalid"
                     *ngIf="!childForm.controls['GroupFormControl'].valid&&childForm.controls['GroupFormControl'].dirty">
-                    Выберите группу</small> -->
+                    Выберите группу</small>
+            </div>
+
+            <div class="p-field">
+                <h5>Пол</h5>
+                <p-dropdown placeholder="Выберите пол" [options]="genderOptions" optionLabel="label" optionValue="value"
+                    appendTo="body" [(ngModel)]="childView.gender">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div style="padding-left: 10px; width: 40%;">
+            <h5>Фото ребенка</h5>
+            <div style="padding-bottom: 10px;" class="passe-partout">
+                <img [src]="childView.image_url" alt="Фото отсутствует" style="width: 30%; height: 40%; opacity: 100;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="type == 'add'" class="p-fluid">
+    <div style="padding-bottom: 10px; width: 100%;">
+        <h5>ФИО ребенка *</h5>
+        <div class="p-inputgroup" [formGroup]="childForm">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input [readOnly]="readonly" type="text" pInputText formControlName="namechildFormControl"
+                [(ngModel)]="childView.name" />
+        </div>
+        <small class="p-invalid"
+            *ngIf="!childForm.controls['namechildFormControl'].valid&&childForm.controls['namechildFormControl'].dirty">
+            Введите ФИО</small>
+    </div>
+
+    <div style="padding-bottom: 10px; width: 100%;">
+        <h5>Организация *</h5>
+        <div class="p-inputgroup" [formGroup]="childForm">
+
+            <input class="cursor-pointer" [readonly]="true" type="text" pInputText [(ngModel)]="childView.org_name"
+                placeholder="Выберите организацию" formControlName="orgFormControl">
+            <span *ngIf="childView.id_org !== '' && !readonly" class="p-inputgroup-addon cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                </svg>
+            </span>
+            <span *ngIf="!readonly" class="p-inputgroup-addon cursor-pointer" (click)="openOrg()">...</span>
+
+        </div>
+
+        <small class="p-invalid"
+            *ngIf="!childForm.controls['orgFormControl'].valid&&childForm.controls['orgFormControl'].dirty">
+            Выберите организацию</small>
+    </div>
+    <div style="display: flex;  width: 100%;">
+        <div style="width: 60%;">
+            <div style="padding-bottom: 10px;">
+                <div class="p-field" style="width: 100%;">
+                    <h5>ИИН ребенка *</h5>
+                    <div style="display: flex;">
+                        <div style="padding-right: 10px; width: 60%;" class="p-inputgroup" [formGroup]="childForm">
+                            <input type="string" pInputText [(ngModel)]="childView.iin"
+                                formControlName="IINFormControl" />
+                        </div>
+                        <div style="width: 40%;">
+                            <button [disabled]="!childForm.controls['IINFormControl'].valid" label="Проверить ИИН"
+                                pButton pRipple type="button" (click)="checkIIN()" icon="pi pi-pencil"
+                                class="p-button-outlined p-button-text">
+                            </button>
+                        </div>
+                    </div>
+                    <small class="p-invalid"
+                        *ngIf="!childForm.controls['IINFormControl'].valid&&childForm.controls['IINFormControl'].dirty">
+                        Введите корректный ИИН</small>
+                </div>
+
+
+            </div>
+
+            <div class="p-field" style="padding-bottom: 10px;">
+                <h5 for="birthday">Дата рождения</h5>
+                <p-calendar dateFormat="dd.mm.yy" (onSelect)="changedate()" appendTo="body"
+                    [(ngModel)]="childView.birthday" [showIcon]="true">
+                </p-calendar>
+            </div>
+
+            <div class="p-field" style="padding-bottom: 10px;" [formGroup]="childForm">
+                <h5>Воспитательная группа</h5>
+                <div class="p-inputgroup">
+                    <input type="text" [readOnly]="true" pInputText [(ngModel)]="childView.group_name"
+                        formControlName="GroupFormControl" />
+                    <span *ngIf="childView.id_group !== '' && !readonly" class=" p-inputgroup-addon cursor-pointer"
+                        (click)="openGroup()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-files" viewBox="0 0 16 16">
+                            <path
+                                d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                        </svg>
+                    </span>
+                    <span *ngIf="!readonly" class="p-inputgroup-addon cursor-pointer" (click)="selectGroup()">...</span>
+                </div>
+                <small class="p-invalid"
+                    *ngIf="!childForm.controls['GroupFormControl'].valid&&childForm.controls['GroupFormControl'].dirty">
+                    Выберите группу</small>
             </div>
 
             <div class="p-field">
@@ -84,7 +191,8 @@
 <div *ngIf="!this.type_edit" style="width:100%; padding: 10px 0;">
     <label style="color: red;">* - обязательные поля</label>
 </div>
-<div *ngIf="!this.type_edit" class="flex align-items-center justify-content-center gap-2">
+<div *ngIf="type == 'edit' || (type == 'add' && !readonly)"
+    class="flex align-items-center justify-content-center gap-2">
     <button pButton pRipple label="Сохранить" icon="pi pi-check" [disabled]="!childForm.valid"
         class="p-button-outlined p-button-success" (click)="saveChild()"></button>
     <button pButton pRipple label="Отмена" icon="pi pi-times" class="p-button-outlined p-button-warning"

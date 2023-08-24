@@ -42,7 +42,7 @@ export class StartPageAdminComponent {
     }];
 
     return this.httpservice
-      .startpageadmin()
+      .startpage()
       .subscribe(
         (data) => (
           this.response = data,

@@ -15,6 +15,11 @@
     color: #faf8f8;
 }
 
+.light-red-class {
+    background-color: rgb(248, 44, 95);
+    color: #faf8f8;
+}
+
 .arctic-class {
     background-color: rgb(22, 184, 212);
 }

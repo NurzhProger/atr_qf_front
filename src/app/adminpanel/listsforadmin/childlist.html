@@ -11,6 +11,14 @@
     <div class="p-toolbar-group-right">
 
         <span class="p-input-icon-right" style="margin-right: 10px;">
+            <input pInputText type="text" [(ngModel)]="searchbin" (change)="getchildlist()"
+                placeholder="поиск по БИН..." id="search-input-bin" (ngModelChange)="onInputChangeBIN(searchbin)"
+                #searchInputBIN />
+            <i class="pi pi-times clear-icon" (click)="clearInputBIN()"
+                [ngStyle]="{'display': showClearIconBIN ? 'block' : 'none'}"></i>
+        </span>
+
+        <span class="p-input-icon-right" style="margin-right: 10px;">
             <input pInputText type="text" [(ngModel)]="searchchild" (change)="getchildlist()" placeholder="поиск..."
                 id="search-input" (ngModelChange)="onInputChange(searchchild)" #searchInput />
             <i class="pi pi-times clear-icon" (click)="clearInput()"
@@ -93,14 +101,14 @@
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
-                        <button pButton pRipple type="button" icon="pi pi-user-minus" matTooltip="Удалить посещение" (click)="deletevisit(childlet)"
-                            class="p-button-rounded p-button-text"></button>
-                        <button pButton pRipple type="button" icon="pi pi-camera" matTooltip="Снять с регистрации" (click)="deregister(childlet)"
-                            class="p-button-rounded p-button-text"></button>
-                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" matTooltip="Изменить"
-                            (click)="onRowEdit(childlet)"></button>
-                        <button pButton pRipple type="button" icon="pi pi-trash" matTooltip="Удалить" (click)="deleteChild(childlet)"
-                            class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-user-minus" matTooltip="Удалить посещение"
+                            (click)="deletevisit(childlet)" class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-camera" matTooltip="Снять с регистрации"
+                            (click)="deregister(childlet)" class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            matTooltip="Изменить" (click)="onRowEdit(childlet)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" matTooltip="Удалить"
+                            (click)="deleteChild(childlet)" class="p-button-rounded p-button-text"></button>
                     </div>
                 </td>
             </tr>

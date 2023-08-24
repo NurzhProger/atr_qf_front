@@ -172,11 +172,11 @@ export class HttpService {
     return this.http.post(this.host + "childedit?param=" + type + "&id_group=" + id_group, JSON.stringify(body), { headers: myHeaders })
   }
 
-  getmetodistlist(page: number, searchMetodist: string) {
+  getmetodistlist(page: number, id_org: string, searchMetodist: string) {
     let myHeaders = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', sessionStorage.getItem('token'));
-    return this.http.get(this.host + "metodistlist?page=" + page + "&metodist=" + searchMetodist, { headers: myHeaders })
+    return this.http.get(this.host + "metodistlist?page=" + page + "&id_org=" + id_org + "&metodist=" + searchMetodist, { headers: myHeaders })
   }
 
   getmetodistlistadmin(page: number, searchMetodist: string) {
@@ -212,13 +212,6 @@ export class HttpService {
       .set('Content-Type', 'application/json')
       .set('Authorization', sessionStorage.getItem('token'));
     return this.http.get(this.host + "startpage", { headers: myHeaders })
-  }
-
-  startpageadmin() {
-    let myHeaders = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', sessionStorage.getItem('token'));
-    return this.http.get(this.host + "startpageadmin", { headers: myHeaders })
   }
 
   gettabelbyday(datestatus: string) {

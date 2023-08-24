@@ -36,6 +36,7 @@ export class planComponent {
 
     report: any = []
     reportOrg: any = []
+    reportOrg_all: any = []
     countallstatus: any = []
     count: any
 
@@ -117,6 +118,7 @@ export class planComponent {
             common: 0,
             notreg: 0,
             notvis: 0,
+            notscanned: 0,
             otp: 0,
             vis: 0,
             boln: 0,
@@ -255,6 +257,15 @@ export class planComponent {
         this.formReport()
     }
 
+    all_vis(status: string) {
+        if (status == '') {
+            this.reportOrg = this.reportOrg_all
+        }
+        else {
+            this.reportOrg = this.reportOrg_all.filter((item: { [x: string]: string; }) => item['status'] == status)
+        }
+    }
+
     form(status: string) {
         if (this.period == undefined) {
             this.messageServicePlan.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите период!' })
@@ -266,7 +277,7 @@ export class planComponent {
         return this.httpservice
             .getchildstatus(status, this.user_org_id, this.id_group, this.toLocaleDate(this.period), "")
             .subscribe(
-                (data) => (this.reportOrg = data, this.reset(), this.loading = true),
+                (data) => (this.reportOrg_all = data, this.reportOrg = this.reportOrg_all, this.reset(), this.loading = true),
                 (error) => (this.messageServicePlan.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })));
     }
 
@@ -314,14 +325,18 @@ export class planComponent {
     };
 
     openChild(child: childListView, status: string) {
-        if (child.image_url !== null) {
+        if (status == '11') {
+            status = '10'
+        }
+
+        if (status == '10' || status == '2') {
             this.childPlanref = this.dialogServicechildPlan.open(childelementComponent,
                 {
                     header: 'Фотографии ребенка',
                     width: 'calc(45%)',
                     height: 'calc(60%)',
                     data: { child: child, status: parseInt(status), id_org: this.user_org_id, today: this.toLocaleDate(this.period), type: 'openfromtabel' }
-                });
+                })
         }
 
 
@@ -337,8 +352,11 @@ export class planComponent {
         else if (status == '4') {
             return 'yellow-class';
         }
-        else if (status == '5' || status == '1') {
+        else if (status == '1') {
             return 'gray-class';
+        }
+        else if (status == '5') {
+            return 'light-red-class';
         }
         else if (status == '9' || status == '10') {
             return 'red-class';

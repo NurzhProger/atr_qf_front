@@ -69,28 +69,31 @@
     <div class="p-toolbar-group-left">
 
         <button pButton pRipple type="button" label="Все ({{countallstatus.common}})" class="p-button-text"
-            (click)="form('')"></button>
+            (click)="all_vis('')"></button>
 
         <button pButton pRipple type="button" label="Присутствуют ({{countallstatus.vis}})" class="p-button-text"
-            (click)="form('2')"></button>
+            (click)="all_vis('2')"></button>
 
-        <button pButton pRipple type="button" label="Ожидают отметки ({{countallstatus.notvis}})" class="p-button-text"
-            (click)="form('1')"></button>
+        <button pButton pRipple type="button" label="Ожидают отметки ({{countallstatus.notscanned}})"
+            class="p-button-text" (click)="all_vis('1')"></button>
 
         <button pButton pRipple type="button" label="Болеют ({{countallstatus.boln}})" class="p-button-text"
-            (click)="form('3')"></button>
+            (click)="all_vis('3')"></button>
 
         <button pButton pRipple type="button" label="Незарегистрированные ({{countallstatus.notreg}})"
-            class="p-button-text" (click)="form('0')"></button>
+            class="p-button-text" (click)="all_vis('0')"></button>
 
         <button pButton pRipple type="button" label="В отпуске ({{countallstatus.otp}})" class="p-button-text"
-            (click)="form('4')"></button>
+            (click)="all_vis('4')"></button>
+
+        <button pButton pRipple type="button" label="Отсутствуют ({{countallstatus.notvis}})" class="p-button-text"
+            (click)="all_vis('5')"></button>
 
         <button pButton pRipple type="button" label="Ложное фото ({{countallstatus.fake}})" class="p-button-text"
-            (click)="form('10')"></button>
+            (click)="all_vis('10')"></button>
 
         <button pButton pRipple type="button" label="Фото на проверке ({{countallstatus.check}})" class="p-button-text"
-            (click)="form('11')"></button>
+            (click)="all_vis('11')"></button>
 
     </div>
 </p-toolbar>
