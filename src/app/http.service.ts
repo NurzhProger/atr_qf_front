@@ -306,10 +306,10 @@ export class HttpService {
     return this.http.get(this.host + "getoblasttype", { headers: myHeaders })
   }
 
-  getregiontype(id_obl: string) {
+  getregiontype() {
     let myHeaders = new HttpHeaders()
       .set('Content-Type', 'application/json')
-    return this.http.get(this.host + "getregiontype?id_obl=" + id_obl, { headers: myHeaders })
+    return this.http.get(this.host + "getregiontype", { headers: myHeaders })
   }
 
   getsuborg(page: number, id_org: string, org_name: string, haveorg: boolean, id_region: number = 0) {

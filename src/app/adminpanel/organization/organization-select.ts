@@ -188,7 +188,7 @@ export class orgselectComponent {
     getregion() {
         if (this.regiontypes.length == 0) {
             this.httpservice
-                .getregiontype(this.id_obl.toString())
+                .getregiontype()
                 .subscribe(
                     (data) => (
                         this.regiontypes = data

@@ -13,16 +13,16 @@
                 </p-selectButton>
             </div>
 
-            <div class="p-field" style="padding-right: 10px;">
+            <!-- <div class="p-field" style="padding-right: 10px;">
                 <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Область :</label>
                 <p-dropdown id="id_obl" [showClear]="showClearObl" [options]="oblasttypes" placeholder="Все области"
                     (onClear)="clearObl()" (onChange)="changeobl()" [(ngModel)]="id_obl" optionLabel="name_obl"
                     optionValue="id_obl" appendTo="body">
                 </p-dropdown>
-            </div>
+            </div> -->
 
-            <div class="p-field" *ngIf="showClearObl" style="padding-right: 10px;">
-                <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Район :</label>
+            <div class="p-field" style="padding-right: 10px;">
+                <label for='id_obl' style="font-size: 11px; font-weight: 700; padding-right: 8px;">Регион :</label>
                 <p-dropdown [showClear]="showClearRegion" [options]="regiontypes" placeholder="Все регионы"
                     (onChange)="changeregion()" (onClick)="getregion()" (onClear)="clearRegion()"
                     optionLabel="name_region" optionValue="id_region" appendTo="body" [(ngModel)]="id_region">

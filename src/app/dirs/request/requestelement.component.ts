@@ -147,7 +147,7 @@ export class requestelementComponent {
     getregion() {
         if (this.regiontypes.length == 0) {
             this.httpservice
-                .getregiontype(this.request.id_obl)
+                .getregiontype()
                 .subscribe(
                     (data) => (
                         this.regiontypes = data

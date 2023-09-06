@@ -171,7 +171,7 @@ export class registrationComponent {
     getregion() {
         if (this.regiontypes.length == 0) {
             this.httpservice
-                .getregiontype(this.orguser.id_obl)
+                .getregiontype()
                 .subscribe(
                     (data) => (
                         this.regiontypes = data

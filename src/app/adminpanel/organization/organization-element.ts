@@ -169,7 +169,7 @@ export class organizationelementComponent {
     getregion() {
         if (this.regiontypes.length == 0) {
             this.httpservice
-                .getregiontype(this.orgView.id_obl)
+                .getregiontype()
                 .subscribe(
                     (data) => (
                         this.regiontypes = data
