@@ -97,7 +97,10 @@ export class planComponent {
                 id: ''
             },
         ]
-        // this.getinfoorg()
+
+        if (this.is_staff == 'True') {
+            this.id_region = 0
+        }
     }
 
     getinfoorg() {
@@ -109,7 +112,8 @@ export class planComponent {
                     this.is_metodist = this.res.is_metodist,
                     this.user_org_id = this.res.user_org_id,
                     this.user_org_name = this.res.user_org_name,
-                    this.id_region = this.res.user_id_region),
+                    this.id_region = this.res.user_id_region
+                ),
                 (error) => (this.messageServicePlan.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' })));
     }
 
