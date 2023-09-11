@@ -91,7 +91,7 @@ export class orglistComponent {
                 header: 'Редактирование организации',
                 width: 'calc(80%)',
                 height: 'calc(100%)',
-                data: { id: org_id }
+                data: { id: org_id, is_staff: 'True' }
             });
 
         this.OrgListref.onClose.subscribe((save: boolean) => {

@@ -70,7 +70,9 @@ export class organizationelementComponent {
     ]
 
     ngOnInit() {
-        this.id_org = this.orgelementconfig.data.id;
+        this.id_org = this.orgelementconfig.data.id || ''
+        this.is_staff = this.orgelementconfig.data.is_staff || ''
+
 
         if (this.id_org == '') {
             this.messageServiceorg.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' });
@@ -85,13 +87,13 @@ export class organizationelementComponent {
                         this.initMap(),
                         this.getoblast(),
                         this.getregion()
-                });
+                })
 
-        this.httpservice
-            .getinfoorg()
-            .subscribe(
-                (data) => (this.res = data,
-                    this.is_staff = this.res.is_staff));
+        // this.httpservice
+        //     .getinfoorg()
+        //     .subscribe(
+        //         (data) => (this.res = data,
+        //             this.is_staff = this.res.is_staff));
     }
 
     initMap(): void {
