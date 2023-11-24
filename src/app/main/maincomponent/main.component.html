@@ -14,12 +14,13 @@
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-              <!-- <li class="nav-item" *ngIf="is_admin">
-                <h4 class="dropdown-item" data-bs-dismiss="offcanvas" (click)="openTab('request-list', 'Заявки', '')">
-                  <i style="padding-right: 10px; font-size: 0.5cm;" class="pi pi-envelope"></i>
-                  Заявки на регистрацию
+              <li *ngIf="is_metodist == 'True'" class="nav-item">
+                <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
+                  (click)="openTab('app-dashboard', 'Сведения по посещаемости', '')">
+                  <i style="padding-right: 10px;  font-size: 0.5cm;" class="pi pi-list"></i>
+                  Сведения посещаемости
                 </h4>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <h4 class="dropdown-item" data-bs-dismiss="offcanvas"
                   (click)="openTab('group-list', 'Воспитательные группы', '')">
@@ -114,7 +115,7 @@
         </child-list>
 
         <metodist-list *ngIf="context.selector=='metodist-list'" (closeEvent)="removetab()" [user_org_id]="user_org_id"
-        [user_org_name]="user_org_name">
+          [user_org_name]="user_org_name">
         </metodist-list>
 
         <visitchild-element *ngIf="context.selector=='visitchild-element'" (closeEvent)="removetab()">
@@ -128,6 +129,9 @@
           [user_org_name]="user_org_name" [is_staff]="is_staff" [id_region]="user_id_region"
           [is_metodist]="is_metodist">
         </plan-list>
+
+        <app-dashboard *ngIf="context.selector=='app-dashboard'" (closeEvent)="removetab()">
+        </app-dashboard>
 
         <request-list *ngIf="context.selector=='request-list'" (closeEvent)="removetab()">
         </request-list>
