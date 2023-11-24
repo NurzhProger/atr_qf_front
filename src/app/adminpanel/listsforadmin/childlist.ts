@@ -143,7 +143,8 @@ export class childlistAdmComponent {
             {
                 header: 'Импорт детей',
                 width: '40%',
-                height: '30%'
+                height: '30%',
+                data: { type: 'child' }
             });
 
         this.uploadref.onClose.subscribe((save: boolean) => {
