@@ -153,8 +153,8 @@ export class childelementComponent {
                 id_group: '',
                 group_name: '',
                 registered: '',
-                birthday: '',
-                gender: '',
+                birthday: this.childView.birthday,
+                gender: this.childView.gender,
                 category: '',
                 image_url: '',
                 visit_photo: ''
