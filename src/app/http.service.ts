@@ -15,7 +15,11 @@ export class HttpService {
   constructor(private http: HttpClient) { }
   // host = "http://192.168.5.26:9999/srv/";
   // host = "http://192.168.5.35:9999/srv/";
-  host = "https://face06.qazna24.kz/srv/";
+  host = "https://face06.qazna24.kz/srv/"; // атырау
+  // host = "https://face04.qazna24.kz/srv/"; // актобе 
+
+  hostfake = "https://face06.qazna24.kz/api/changestatusbyadm?case="
+  // hostfake = "https://face04.qazna24.kz/api/changestatusbyadm?case="
 
   authuser(login: string, pass: string) {
     let myHeaders = new HttpHeaders()
@@ -394,7 +398,7 @@ export class HttpService {
       .set('Content-Type', 'application/json')
       .set('Authorization', sessionStorage.getItem('token'));
     // return this.http.get("http://192.168.5.23:9999/api/changestatusbyadm?case=" + real + "&id=" + id, { headers: myHeaders })
-    return this.http.get("https://face06.qazna24.kz/api/changestatusbyadm?case=" + real + "&id=" + id, { headers: myHeaders })
+    return this.http.get(this.hostfake + real + "&id=" + id, { headers: myHeaders })
   }
 
   getOtherFoto(iin: string, id?: number) {
